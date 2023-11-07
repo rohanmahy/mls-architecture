@@ -2497,36 +2497,36 @@ used once and consumed.<a href="#section-7-4.2.2.4.1" class="pilcrow">¶</a></p>
 design:<a href="#section-7-4.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-4.3.2.1">
-              <p id="section-7-4.3.2.1.1">If assisted joining is desired (meaning that the ratchet tree is not
-provided in Welcome messages), there must be a method to download the
-ratchet tree corresponding to a group.<a href="#section-7-4.3.2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-7-4.3.2.1.1">Instead of distributing group information to a new members
+entirely within a Welcome messages, an application may rely on
+servers to store public information about the group, such as
+group members' credentials and related public keys, and provide
+this information to new members. (In such a system, Welcome
+messages are still necessary to convey confidential information
+about the group.) Such an application will require mechanisms for
+new members to download the current information for a group, and
+for members to update the information as the group evolves.<a href="#section-7-4.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7-4.3.2.2">
-              <p id="section-7-4.3.2.2.1">If assisted joining is desired and the Delivery Service is not able to
-compute the ratchet tree itself (because some proposals or commits are sent
-encrypted), there must be a method for group members to publish the updated
-ratchet tree after each commit.<a href="#section-7-4.3.2.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7-4.3.2.3">
-              <p id="section-7-4.3.2.3.1">If external joiners are allowed, there must be a method to publish a
+              <p id="section-7-4.3.2.2.1">If external joiners are allowed, there must be a method to publish a
 serialized <code>GroupInfo</code> object (with an <code>external_pub</code> extension) that
 corresponds to a specific group and epoch, and keep that object in sync with
-the state of the group.<a href="#section-7-4.3.2.3.1" class="pilcrow">¶</a></p>
+the state of the group.<a href="#section-7-4.3.2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7-4.3.2.3">
+              <p id="section-7-4.3.2.3.1">If an application chooses not to allow assisted or external joining, it may
+instead provide a method for external users to solicit group members (or a
+designated service) to add them to a group.<a href="#section-7-4.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7-4.3.2.4">
-              <p id="section-7-4.3.2.4.1">If an application chooses not to allow assisted or external joining, it may
-instead provide a method for external users to solicit group members (or a
-designated service) to add them to a group.<a href="#section-7-4.3.2.4.1" class="pilcrow">¶</a></p>
+              <p id="section-7-4.3.2.4.1">If the application uses external PSKs, or uses resumption PSKs that all
+members of a group may not have access to, there must be a method for
+distributing these PSKs to group members.<a href="#section-7-4.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7-4.3.2.5">
-              <p id="section-7-4.3.2.5.1">If the application uses external PSKs, or uses resumption PSKs that all
-members of a group may not have access to, there must be a method for
-distributing these PSKs to group members.<a href="#section-7-4.3.2.5.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-7-4.3.2.6">
-              <p id="section-7-4.3.2.6.1">If an application wishes to detect and possibly discipline members that send
+              <p id="section-7-4.3.2.5.1">If an application wishes to detect and possibly discipline members that send
 malformed commits with the intention of corrupting a group's state, there
-must be a method for reporting and validating malformed commits.<a href="#section-7-4.3.2.6.1" class="pilcrow">¶</a></p>
+must be a method for reporting and validating malformed commits.<a href="#section-7-4.3.2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
@@ -2577,7 +2577,8 @@ message.<a href="#section-7-8.2.1" class="pilcrow">¶</a></p>
           <p id="section-7-8.3.1">Group IDs, as decided by group creators and used to uniquely identify a group.<a href="#section-7-8.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-8.4">
-          <p id="section-7-8.4.1">The <code>application_id</code> extension of a LeafNode.<a href="#section-7-8.4.1" class="pilcrow">¶</a></p>
+          <p id="section-7-8.4.1">Application-level identifiers of public key material (specifically
+the <code>application_id</code> extension as defined in <span><a href="https://rfc-editor.org/rfc/rfc9420#section-5.3.3" class="relref">Section 5.3.3</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>).<a href="#section-7-8.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-7-9">MLS requires the following policies to be defined, which restrict the set of
@@ -2991,8 +2992,8 @@ compromise)<a href="#section-8.3-3.5.1" class="pilcrow">¶</a></p>
 <p id="section-8.3-4">The MLS protocol provides per-sender chains of AEAD keys that are generated from
 Group Secrets. These keys are used to protect MLS Plaintext messages which can
 be Group Operation or Application messages. The Group Operation messages offer
-an additional protection as the secret exchanged within the TreeKEM group key
-agreement are public-key encrypted to subgroups with HPKE.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
+an additional protection as the secrets exchanged within them
+are public-key encrypted to subgroups with HPKE.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
 <div id="compromise-of-aead-key-material">
 <section id="section-8.3.1">
           <h4 id="name-compromise-of-aead-key-mate">
@@ -3172,8 +3173,7 @@ be a priority.<a href="#section-8.3.5-7" class="pilcrow">¶</a></p>
 <p id="section-8.3.5-8">Overall there is no way to detect or prevent these compromises, as discussed in
 the previous sections, performing separation of the application secret states
 can help recovery after compromise, this is the case for signature keys but
-similar concern exists for the encryption private key used in the TreeKEM Group
-Key Agreement.<a href="#section-8.3.5-8" class="pilcrow">¶</a></p>
+similar concern exists for client's encryption private keys.<a href="#section-8.3.5-8" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.3.5-9.1">
               <p id="section-8.3.5-9.1.1"><strong>RECOMMENDATION:</strong> The secret keys used for public key encryption should be
@@ -3543,7 +3543,7 @@ analyzed by <span>[<a href="#BBN19" class="cite xref">BBN19</a>]</span> (draft 7
 <p id="section-8.6-2">Individual components of various drafts of the MLS protocol have been analyzed
 in isolation and with differing adversarial models, for example, <span>[<a href="#BBR18" class="cite xref">BBR18</a>]</span>,
 <span>[<a href="#ACDT19" class="cite xref">ACDT19</a>]</span>, <span>[<a href="#ACCKKMPPWY19" class="cite xref">ACCKKMPPWY19</a>]</span>, <span>[<a href="#AJM20" class="cite xref">AJM20</a>]</span>, <span>[<a href="#ACJM20" class="cite xref">ACJM20</a>]</span>, and <span>[<a href="#AHKM21" class="cite xref">AHKM21</a>]</span> analyze the
-ratcheting tree as the sub-protocol of MLS that facilitates key agreement,
+ratcheting tree sub-protocol of MLS that facilitates key agreement,
 <span>[<a href="#WPBB22" class="cite xref">WPBB22</a>]</span> analyzes the sub-protocol of MLS for group state agreement and authentication,
 while <span>[<a href="#BCK21" class="cite xref">BCK21</a>]</span> analyzes the key derivation paths in the ratchet tree and key
 schedule. Finally, <span>[<a href="#CHK21" class="cite xref">CHK21</a>]</span> analyzes the authentication and cross-group healing
