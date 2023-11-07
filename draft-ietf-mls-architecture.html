@@ -30,24 +30,24 @@ guarantees that are achieved by a messaging application. This is especially true
 in the case of active adversaries that are able to compromise clients, the delivery
 service, or the authentication service. 
     " name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.18.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-mls-architecture-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
-    Python 3.11.5
+  xml2rfc 3.18.2
+    Python 3.11.6
     ConfigArgParse 1.5.3
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 3.11.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
     setuptools 67.7.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.9
 -->
 <link href="draft-ietf-mls-architecture.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1046,11 +1046,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">MLS Architecture</td>
-<td class="right">September 2023</td>
+<td class="right">November 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Beurdouche, et al.</td>
-<td class="center">Expires 31 March 2024</td>
+<td class="center">Expires 10 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-mls-architecture-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-09-28" class="published">28 September 2023</time>
+<time datetime="2023-11-07" class="published">7 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-03-31">31 March 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-10">10 May 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1145,7 +1145,7 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 March 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1415,19 +1415,21 @@ may be a single service provider, a federated system, or some kind of
 peer-to-peer system. The service needs to provide two services that
 facilitate client communication using MLS:<a href="#section-2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-3.1">An Authentication Service (AS) which is responsible for
+<li class="normal" id="section-2-3.1">
+          <p id="section-2-3.1.1">An Authentication Service (AS) which is responsible for
 attesting to bindings between application-meaningful identifiers and the
 public key material used for authentication in the MLS protocol. The
 AS must also be able to generate credentials that encode these
-bindings and validate credentials provided by MLS clients.<a href="#section-2-3.1" class="pilcrow">¶</a>
+bindings and validate credentials provided by MLS clients.<a href="#section-2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-3.2">A Delivery Service (DS)  which can receive and distribute
+        <li class="normal" id="section-2-3.2">
+          <p id="section-2-3.2.1">A Delivery Service (DS)  which can receive and distribute
 messages between group members. In the case of group messaging, the delivery
 service may also be responsible for acting as a "broadcaster" where the sender
 sends a single message which is then forwarded to each recipient in the group
 by the DS. The DS is also responsible for storing and delivering initial
 public key material required by MLS clients in order to proceed with the group
-secret key establishment that is part of the MLS protocol.<a href="#section-2-3.2" class="pilcrow">¶</a>
+secret key establishment that is part of the MLS protocol.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-2-4">For presentation purposes, this document treats the AS and DS as conventional
@@ -1436,16 +1438,19 @@ for the AS or DS. These services may reside on the same server or different
 servers, they may be distributed between server and client components, and they
 may even involve some action by users.  For example:<a href="#section-2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-5.1">Several secure messaging services today provide a centralized DS, and rely on
-manual comparison of clients' public keys as the AS.<a href="#section-2-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2-5.1">
+          <p id="section-2-5.1.1">Several secure messaging services today provide a centralized DS, and rely on
+manual comparison of clients' public keys as the AS.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-5.2">MLS clients connected to a peer-to-peer network could instantiate a
-decentralized DS by transmitting MLS messages over that network.<a href="#section-2-5.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-2-5.2">
+          <p id="section-2-5.2.1">MLS clients connected to a peer-to-peer network could instantiate a
+decentralized DS by transmitting MLS messages over that network.<a href="#section-2-5.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-5.3">In an MLS group using a Public Key Infrastructure (PKI) for authentication,
+        <li class="normal" id="section-2-5.3">
+          <p id="section-2-5.3.1">In an MLS group using a Public Key Infrastructure (PKI) for authentication,
 the AS would comprise the certificate issuance and validation processes,
 both of which involve logic inside MLS clients as well as various
-existing PKI roles (ex: Certification Authorities).<a href="#section-2-5.3" class="pilcrow">¶</a>
+existing PKI roles (ex: Certification Authorities).<a href="#section-2-5.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-2-6">It is important to note that the Authentication Service can be
@@ -1711,11 +1716,13 @@ sender can use a new key.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.3-1">When Alice wants to create a group including Bob, she first uses the DS to look
 up his initial keying material. She then generates two messages:<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-2.1">A message to the entire group (which at this point is just her and Bob)
-that adds Bob to the group.<a href="#section-3.3-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.3-2.1">
+            <p id="section-3.3-2.1.1">A message to the entire group (which at this point is just her and Bob)
+that adds Bob to the group.<a href="#section-3.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-2.2">A <em>Welcome</em> message just to Bob encrypted with his initial keying material that
-includes the secret keying information necessary to join the group.<a href="#section-3.3-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.3-2.2">
+            <p id="section-3.3-2.2.1">A <em>Welcome</em> message just to Bob encrypted with his initial keying material that
+includes the secret keying information necessary to join the group.<a href="#section-3.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.3-3">She sends both of these messages to the Delivery Services, which is responsible
@@ -1734,11 +1741,13 @@ to receive it.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 as with Bob: she first uses the DS to look
 up his initial keying material and then generates two messages:<a href="#section-3.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.4-2.1">A message to the entire group (consisting of her, Bob, and Charlie) adding
-Charlie to the group.<a href="#section-3.4-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.4-2.1">
+            <p id="section-3.4-2.1.1">A message to the entire group (consisting of her, Bob, and Charlie) adding
+Charlie to the group.<a href="#section-3.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.4-2.2">A <em>Welcome</em> message just to Charlie encrypted with his initial keying material that
-includes the secret keying information necessary to join the group.<a href="#section-3.4-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.4-2.2">
+            <p id="section-3.4-2.2.1">A <em>Welcome</em> message just to Charlie encrypted with his initial keying material that
+includes the secret keying information necessary to join the group.<a href="#section-3.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.4-3">At the completion of this process, we have a group with Alice, Bob, and Charlie,
@@ -1754,17 +1763,23 @@ send messages or to key other protocols.<a href="#section-3.4-3" class="pilcrow"
 <p id="section-3.5-1">Once the group has been created, clients can perform other actions,
 such as:<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.5-2.1">sending a message to everyone in the group<a href="#section-3.5-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.5-2.1">
+            <p id="section-3.5-2.1.1">sending a message to everyone in the group<a href="#section-3.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.2">receiving a message from someone in the group<a href="#section-3.5-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.5-2.2">
+            <p id="section-3.5-2.2.1">receiving a message from someone in the group<a href="#section-3.5-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.3">adding one or more clients to an existing group<a href="#section-3.5-2.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.5-2.3">
+            <p id="section-3.5-2.3.1">adding one or more clients to an existing group<a href="#section-3.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.4">remove one or more members from an existing group<a href="#section-3.5-2.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.5-2.4">
+            <p id="section-3.5-2.4.1">remove one or more members from an existing group<a href="#section-3.5-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.5">updating their own key material<a href="#section-3.5-2.5" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.5-2.5">
+            <p id="section-3.5-2.5.1">updating their own key material<a href="#section-3.5-2.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.5-2.6">leave a group (by asking to be removed)<a href="#section-3.5-2.6" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.5-2.6">
+            <p id="section-3.5-2.6.1">leave a group (by asking to be removed)<a href="#section-3.5-2.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.5-3">Importantly, MLS does not itself enforce any access control on group
@@ -1817,14 +1832,17 @@ cannot assume that the client is a member of the group.<a href="#section-3.6-4" 
       </h2>
 <p id="section-4-1">The Authentication Service (AS) has to provide three functionalities:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4-2">
-<li id="section-4-2.1">Issue credentials to clients that attest to bindings between identities and
-signature key pairs<a href="#section-4-2.1" class="pilcrow">¶</a>
+<li id="section-4-2.1">
+          <p id="section-4-2.1.1">Issue credentials to clients that attest to bindings between identities and
+signature key pairs<a href="#section-4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.2">Enable a client to verify that a credential presented by another client is
-valid with respect to a reference identifier<a href="#section-4-2.2" class="pilcrow">¶</a>
+        <li id="section-4-2.2">
+          <p id="section-4-2.2.1">Enable a client to verify that a credential presented by another client is
+valid with respect to a reference identifier<a href="#section-4-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li id="section-4-2.3">Enable a group member to verify that a credential represents the same client
-as another credential<a href="#section-4-2.3" class="pilcrow">¶</a>
+        <li id="section-4-2.3">
+          <p id="section-4-2.3.1">Enable a group member to verify that a credential represents the same client
+as another credential<a href="#section-4-2.3.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 <p id="section-4-3">A member with a valid credential authenticates its MLS messages by signing them
@@ -1834,23 +1852,26 @@ service could be, for instance, running on the members' devices, while another
 part is a separate entity entirely.  The following examples illustrate the
 breadth of this concept:<a href="#section-4-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-5.1">A PKI could be used as an AS <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.  The issuance function would be
+<li class="normal" id="section-4-5.1">
+          <p id="section-4-5.1.1">A PKI could be used as an AS <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.  The issuance function would be
 provided by the certificate authorities in the PKI, and the verification
-function would correspond to certificate verification by clients.<a href="#section-4-5.1" class="pilcrow">¶</a>
+function would correspond to certificate verification by clients.<a href="#section-4-5.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-5.2">Several current messaging applications rely on users verifying each other's
+        <li class="normal" id="section-4-5.2">
+          <p id="section-4-5.2.1">Several current messaging applications rely on users verifying each other's
 key fingerprints for authentication.  In this scenario, the issuance function
 is simply the generation of a key pair (i.e., a credential is just an
 identifier and public key, with no information to assist in verification).
 The verification function is the application functionality that enables users
-to verify keys.<a href="#section-4-5.2" class="pilcrow">¶</a>
+to verify keys.<a href="#section-4-5.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-5.3">In a system based on <span>[<a href="#CONIKS" class="cite xref">CONIKS</a>]</span> end user Key Transparency (KT), the issuance
+        <li class="normal" id="section-4-5.3">
+          <p id="section-4-5.3.1">In a system based on <span>[<a href="#CONIKS" class="cite xref">CONIKS</a>]</span> end user Key Transparency (KT), the issuance
 function would correspond to the insertion of a key in a KT log under a user's
 identity. The verification function would correspond to verifying a key's
 inclusion in the log for a claimed identity, together with the KT log's
 mechanisms for a user to monitor and control which keys are associated with
-their identity.<a href="#section-4-5.3" class="pilcrow">¶</a>
+their identity.<a href="#section-4-5.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-4-6">By the nature of its roles in MLS authentication, the AS is invested with a
@@ -1889,11 +1910,13 @@ across groups is more of a detection mechanism than a prevention mechanism.<a hr
       </h2>
 <p id="section-5-1">The Delivery Service (DS) plays two major roles in MLS:<a href="#section-5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5-2.1">As a directory service providing the initial keying material for
+<li class="normal" id="section-5-2.1">
+          <p id="section-5-2.1.1">As a directory service providing the initial keying material for
 clients to use. This allows a client to establish a shared key and send
-encrypted messages to other clients even if they're offline.<a href="#section-5-2.1" class="pilcrow">¶</a>
+encrypted messages to other clients even if they're offline.<a href="#section-5-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-5-2.2">Routing MLS messages among clients.<a href="#section-5-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-5-2.2">
+          <p id="section-5-2.2.1">Routing MLS messages among clients.<a href="#section-5-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-5-3">While MLS depends on correct behavior by the Authentication Service in
@@ -1913,10 +1936,12 @@ material with the Delivery Service. This key material, called a KeyPackage,
 advertises the functional abilities of the client such as supported protocol
 versions, supported extensions, and the following cryptographic information:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.1-2.1">A credential from the Authentication Service attesting to the binding between
-the identity and the client's signature key.<a href="#section-5.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-5.1-2.1">
+            <p id="section-5.1-2.1.1">A credential from the Authentication Service attesting to the binding between
+the identity and the client's signature key.<a href="#section-5.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.1-2.2">The client's asymmetric encryption public key.<a href="#section-5.1-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-5.1-2.2">
+            <p id="section-5.1-2.2.1">The client's asymmetric encryption public key.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.1-3">All the parameters in the KeyPackage are signed with the signature
@@ -1977,13 +2002,15 @@ appropriate solution, depends on the design of the Delivery Service. Per the CAP
 theorem <span>[<a href="#CAPBR" class="cite xref">CAPBR</a>]</span>, there are two general classes of distributed system that the
 Delivery Service might fall into:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2-4.1">Consistent and Partition-tolerant, or Strongly Consistent, systems can provide
+<li class="normal" id="section-5.2-4.1">
+            <p id="section-5.2-4.1.1">Consistent and Partition-tolerant, or Strongly Consistent, systems can provide
 a globally consistent view of data but may stop working if there are network
-issues;<a href="#section-5.2-4.1" class="pilcrow">¶</a>
+issues;<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-5.2-4.2">Available and Partition-tolerant, or Eventually Consistent, systems continue
+          <li class="normal" id="section-5.2-4.2">
+            <p id="section-5.2-4.2.1">Available and Partition-tolerant, or Eventually Consistent, systems continue
 working despite network issues but may return different views of data to
-different users.<a href="#section-5.2-4.2" class="pilcrow">¶</a>
+different users.<a href="#section-5.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.2-5">Strategies for sequencing messages in strongly and eventually consistent systems
@@ -2036,19 +2063,21 @@ sending each message to each other member individually, or when a distributed
 peer-to-peer network is used to broadcast messages.<a href="#section-5.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2.2-3">Upon receiving a Commit from the Delivery Service, clients can either:<a href="#section-5.2.2-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.2.2-4">
-<li id="section-5.2.2-4.1">Pause sending new messages for a short amount of time to account for a
+<li id="section-5.2.2-4.1">
+              <p id="section-5.2.2-4.1.1">Pause sending new messages for a short amount of time to account for a
 reasonable degree of network latency and see if any other Commits are
 received for the same epoch. If multiple Commits are received, the clients
 can use a deterministic tie-breaking policy to decide which to accept, and
-then resume sending messages as normal.<a href="#section-5.2.2-4.1" class="pilcrow">¶</a>
+then resume sending messages as normal.<a href="#section-5.2.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-5.2.2-4.2">Accept the Commit immediately but keep a copy of the previous group state for
+            <li id="section-5.2.2-4.2">
+              <p id="section-5.2.2-4.2.1">Accept the Commit immediately but keep a copy of the previous group state for
 a short period of time. If another Commit for a past epoch is received,
 clients use a deterministic tie-breaking policy to decide if they should
 continue using the Commit they originally accepted or revert and use the
 later one. Note that any copies of previous or forked group states must be
 deleted within a reasonable amount of time to ensure the protocol provides
-forward-secrecy.<a href="#section-5.2.2-4.2" class="pilcrow">¶</a>
+forward-secrecy.<a href="#section-5.2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 <p id="section-5.2.2-5">In the event of a network partition, a subset of members may be isolated from
@@ -2315,7 +2344,7 @@ offline at unpredictable times.<a href="#section-6.9-1" class="pilcrow">¶</a></
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-6.9-2.1">
             <p id="section-6.9-2.1.1"><strong>RECOMMENDATION:</strong> Use the default content mechanism defined in
-<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-02#section-2.3" class="relref">Section 2.3</a> of [<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>, unless the specific application defines another
+<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-03#section-2.3" class="relref">Section 2.3</a> of [<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>, unless the specific application defines another
 mechanism which more appropriately addresses the same requirements for that
 application of MLS.<a href="#section-6.9-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -2392,13 +2421,17 @@ interoperate.<a href="#section-7-3" class="pilcrow">¶</a></p>
 defines the types of credentials which may be used in a deployment and
 provides methods for:<a href="#section-7-4.1.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7-4.1.2">
-<li id="section-7-4.1.2.1">Issuing new credentials with a relevant credential lifetime,<a href="#section-7-4.1.2.1" class="pilcrow">¶</a>
+<li id="section-7-4.1.2.1">
+              <p id="section-7-4.1.2.1.1">Issuing new credentials with a relevant credential lifetime,<a href="#section-7-4.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.1.2.2">Validating a credential against a reference identifier,<a href="#section-7-4.1.2.2" class="pilcrow">¶</a>
+            <li id="section-7-4.1.2.2">
+              <p id="section-7-4.1.2.2.1">Validating a credential against a reference identifier,<a href="#section-7-4.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.1.2.3">Validating whether or not two credentials represent the same client, and<a href="#section-7-4.1.2.3" class="pilcrow">¶</a>
+            <li id="section-7-4.1.2.3">
+              <p id="section-7-4.1.2.3.1">Validating whether or not two credentials represent the same client, and<a href="#section-7-4.1.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.1.2.4">Optionally revoking credentials which are no longer authorized.<a href="#section-7-4.1.2.4" class="pilcrow">¶</a>
+            <li id="section-7-4.1.2.4">
+              <p id="section-7-4.1.2.4.1">Optionally revoking credentials which are no longer authorized.<a href="#section-7-4.1.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
@@ -2406,14 +2439,18 @@ provides methods for:<a href="#section-7-4.1.1" class="pilcrow">¶</a></p>
           <p id="section-7-4.2.1">A <strong>Delivery Service</strong>, described fully in <a href="#delivery-service" class="auto internal xref">Section 5</a>, provides
 methods for:<a href="#section-7-4.2.1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7-4.2.2">
-<li id="section-7-4.2.2.1">Delivering messages for a group to all members in the group.<a href="#section-7-4.2.2.1" class="pilcrow">¶</a>
+<li id="section-7-4.2.2.1">
+              <p id="section-7-4.2.2.1.1">Delivering messages for a group to all members in the group.<a href="#section-7-4.2.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.2.2.2">Delivering Welcome messages to new members of a group.<a href="#section-7-4.2.2.2" class="pilcrow">¶</a>
+            <li id="section-7-4.2.2.2">
+              <p id="section-7-4.2.2.2.1">Delivering Welcome messages to new members of a group.<a href="#section-7-4.2.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.2.2.3">Uploading new KeyPackages for a user's own clients.<a href="#section-7-4.2.2.3" class="pilcrow">¶</a>
+            <li id="section-7-4.2.2.3">
+              <p id="section-7-4.2.2.3.1">Uploading new KeyPackages for a user's own clients.<a href="#section-7-4.2.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li id="section-7-4.2.2.4">Downloading KeyPackages for specific clients. Typically, KeyPackages are
-used once and consumed.<a href="#section-7-4.2.2.4" class="pilcrow">¶</a>
+            <li id="section-7-4.2.2.4">
+              <p id="section-7-4.2.2.4.1">Downloading KeyPackages for specific clients. Typically, KeyPackages are
+used once and consumed.<a href="#section-7-4.2.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ol>
 </li>
@@ -2421,31 +2458,37 @@ used once and consumed.<a href="#section-7-4.2.2.4" class="pilcrow">¶</a>
           <p id="section-7-4.3.1">Additional services may or may not be required depending on the application
 design:<a href="#section-7-4.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-4.3.2.1">If assisted joining is desired (meaning that the ratchet tree is not
+<li class="normal" id="section-7-4.3.2.1">
+              <p id="section-7-4.3.2.1.1">If assisted joining is desired (meaning that the ratchet tree is not
 provided in Welcome messages), there must be a method to download the
-ratchet tree corresponding to a group.<a href="#section-7-4.3.2.1" class="pilcrow">¶</a>
+ratchet tree corresponding to a group.<a href="#section-7-4.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-4.3.2.2">If assisted joining is desired and the Delivery Service is not able to
+            <li class="normal" id="section-7-4.3.2.2">
+              <p id="section-7-4.3.2.2.1">If assisted joining is desired and the Delivery Service is not able to
 compute the ratchet tree itself (because some proposals or commits are sent
 encrypted), there must be a method for group members to publish the updated
-ratchet tree after each commit.<a href="#section-7-4.3.2.2" class="pilcrow">¶</a>
+ratchet tree after each commit.<a href="#section-7-4.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-4.3.2.3">If external joiners are allowed, there must be a method to publish a
+            <li class="normal" id="section-7-4.3.2.3">
+              <p id="section-7-4.3.2.3.1">If external joiners are allowed, there must be a method to publish a
 serialized <code>GroupInfo</code> object (with an <code>external_pub</code> extension) that
 corresponds to a specific group and epoch, and keep that object in sync with
-the state of the group.<a href="#section-7-4.3.2.3" class="pilcrow">¶</a>
+the state of the group.<a href="#section-7-4.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-4.3.2.4">If an application chooses not to allow assisted or external joining, it may
+            <li class="normal" id="section-7-4.3.2.4">
+              <p id="section-7-4.3.2.4.1">If an application chooses not to allow assisted or external joining, it may
 instead provide a method for external users to solicit group members (or a
-designated service) to add them to a group.<a href="#section-7-4.3.2.4" class="pilcrow">¶</a>
+designated service) to add them to a group.<a href="#section-7-4.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-4.3.2.5">If the application uses external PSKs, or uses resumption PSKs that all
+            <li class="normal" id="section-7-4.3.2.5">
+              <p id="section-7-4.3.2.5.1">If the application uses external PSKs, or uses resumption PSKs that all
 members of a group may not have access to, there must be a method for
-distributing these PSKs to group members.<a href="#section-7-4.3.2.5" class="pilcrow">¶</a>
+distributing these PSKs to group members.<a href="#section-7-4.3.2.5.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-4.3.2.6">If an application wishes to detect and possibly discipline members that send
+            <li class="normal" id="section-7-4.3.2.6">
+              <p id="section-7-4.3.2.6.1">If an application wishes to detect and possibly discipline members that send
 malformed commits with the intention of corrupting a group's state, there
-must be a method for reporting and validating malformed commits.<a href="#section-7-4.3.2.6" class="pilcrow">¶</a>
+must be a method for reporting and validating malformed commits.<a href="#section-7-4.3.2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
@@ -2453,24 +2496,30 @@ must be a method for reporting and validating malformed commits.<a href="#sectio
 <p id="section-7-5">MLS requires the following parameters to be defined, which must be the same for
 two implementations to interoperate:<a href="#section-7-5" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-6.1">The maximum total lifetime that is acceptable for a KeyPackage.<a href="#section-7-6.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-6.1">
+          <p id="section-7-6.1.1">The maximum total lifetime that is acceptable for a KeyPackage.<a href="#section-7-6.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-6.2">How long to store the resumption secret for past epochs of a group.<a href="#section-7-6.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-6.2">
+          <p id="section-7-6.2.1">How long to store the resumption secret for past epochs of a group.<a href="#section-7-6.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-6.3">
           <p id="section-7-6.3.1">The degree of tolerance that's allowed for out-of-order message delivery:<a href="#section-7-6.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-6.3.2.1">How long to keep unused nonce and key pairs for a sender<a href="#section-7-6.3.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-6.3.2.1">
+              <p id="section-7-6.3.2.1.1">How long to keep unused nonce and key pairs for a sender<a href="#section-7-6.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-6.3.2.2">A maximum number of unused key pairs to keep.<a href="#section-7-6.3.2.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-6.3.2.2">
+              <p id="section-7-6.3.2.2.1">A maximum number of unused key pairs to keep.<a href="#section-7-6.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-6.3.2.3">A maximum number of steps that clients will move a secret tree ratchet
-forward in response to a single message before rejecting it.<a href="#section-7-6.3.2.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-6.3.2.3">
+              <p id="section-7-6.3.2.3.1">A maximum number of steps that clients will move a secret tree ratchet
+forward in response to a single message before rejecting it.<a href="#section-7-6.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-6.3.2.4">Whether to buffer messages that aren't able to be understood yet due to
+            <li class="normal" id="section-7-6.3.2.4">
+              <p id="section-7-6.3.2.4.1">Whether to buffer messages that aren't able to be understood yet due to
 other messages not arriving first, and if so, how many and for how long. For
 example, Commit messages that arrive before a proposal they reference, or
-application messages that arrive before the Commit starting an epoch.<a href="#section-7-6.3.2.4" class="pilcrow">¶</a>
+application messages that arrive before the Commit starting an epoch.<a href="#section-7-6.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
@@ -2479,73 +2528,97 @@ application messages that arrive before the Commit starting an epoch.<a href="#s
 data. The format and intention of any data in these locations must align for two
 deployments to interoperate:<a href="#section-7-7" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-8.1">Application data, sent as the payload of an encrypted message.<a href="#section-7-8.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-8.1">
+          <p id="section-7-8.1.1">Application data, sent as the payload of an encrypted message.<a href="#section-7-8.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-8.2">Additional authenticated data, sent unencrypted in an otherwise encrypted
-message.<a href="#section-7-8.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-8.2">
+          <p id="section-7-8.2.1">Additional authenticated data, sent unencrypted in an otherwise encrypted
+message.<a href="#section-7-8.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-8.3">Group IDs, as decided by group creators and used to uniquely identify a group.<a href="#section-7-8.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-8.3">
+          <p id="section-7-8.3.1">Group IDs, as decided by group creators and used to uniquely identify a group.<a href="#section-7-8.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-8.4">The <code>application_id</code> extension of a LeafNode.<a href="#section-7-8.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-8.4">
+          <p id="section-7-8.4.1">The <code>application_id</code> extension of a LeafNode.<a href="#section-7-8.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-7-9">MLS requires the following policies to be defined, which restrict the set of
 acceptable behavior in a group. These policies must be consistent between
 deployments for them to interoperate:<a href="#section-7-9" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-10.1">A policy on which ciphersuites are acceptable.<a href="#section-7-10.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-10.1">
+          <p id="section-7-10.1.1">A policy on which ciphersuites are acceptable.<a href="#section-7-10.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-10.2">A policy on any mandatory or forbidden MLS extensions.<a href="#section-7-10.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.2">
+          <p id="section-7-10.2.1">A policy on any mandatory or forbidden MLS extensions.<a href="#section-7-10.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-10.3">A policy on when to send proposals and commits in plaintext instead of
-encrypted.<a href="#section-7-10.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.3">
+          <p id="section-7-10.3.1">A policy on when to send proposals and commits in plaintext instead of
+encrypted.<a href="#section-7-10.3.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-10.4">
           <p id="section-7-10.4.1">A policy for which proposals are valid to have in a commit, including but not
 limited to:<a href="#section-7-10.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-10.4.2.1">When a member is allowed to add or remove other members of the group.<a href="#section-7-10.4.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-10.4.2.1">
+              <p id="section-7-10.4.2.1.1">When a member is allowed to add or remove other members of the group.<a href="#section-7-10.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-10.4.2.2">When, and under what circumstances, a reinitialization proposal is allowed.<a href="#section-7-10.4.2.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-10.4.2.2">
+              <p id="section-7-10.4.2.2.1">When, and under what circumstances, a reinitialization proposal is allowed.<a href="#section-7-10.4.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-10.4.2.3">When proposals from external senders are allowed and how to authorize
-those proposals.<a href="#section-7-10.4.2.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-10.4.2.3">
+              <p id="section-7-10.4.2.3.1">When proposals from external senders are allowed and how to authorize
+those proposals.<a href="#section-7-10.4.2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-10.4.2.4">When external joiners are allowed and how to authorize those external
-commits.<a href="#section-7-10.4.2.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-10.4.2.4">
+              <p id="section-7-10.4.2.4.1">When external joiners are allowed and how to authorize those external
+commits.<a href="#section-7-10.4.2.4.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-7-10.4.2.5">Which other proposal types are allowed.<a href="#section-7-10.4.2.5" class="pilcrow">¶</a>
+            <li class="normal" id="section-7-10.4.2.5">
+              <p id="section-7-10.4.2.5.1">Which other proposal types are allowed.<a href="#section-7-10.4.2.5.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </li>
-        <li class="normal" id="section-7-10.5">A policy of when members should commit pending proposals in a group.<a href="#section-7-10.5" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.5">
+          <p id="section-7-10.5.1">A policy of when members should commit pending proposals in a group.<a href="#section-7-10.5.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-10.6">A policy of how to protect and share the GroupInfo objects needed for
-external joins.<a href="#section-7-10.6" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.6">
+          <p id="section-7-10.6.1">A policy of how to protect and share the GroupInfo objects needed for
+external joins.<a href="#section-7-10.6.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-10.7">A policy for when two credentials represent the same client. Note that many
-credentials may be issued authenticating the same identity but for different
-signature keys, because each credential corresponds to a different device
-(client) owned by the same application user. However, one device may control
-many signature keys but should still only be considered a single client.<a href="#section-7-10.7" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.7">
+          <p id="section-7-10.7.1">A policy for when two credentials represent the same client. Note
+that many credentials may be issued authenticating the same identity
+but for different signature keys, because each credential
+corresponds to a different device (client) owned by the same
+application user. However, one device may control multiple signature
+keys -- for instance if they have keys corresponding to multiple
+overlapping time periods -- but should still only be considered a
+single client.<a href="#section-7-10.7.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-10.8">A policy on how long to allow a member to stay in a group without updating its
-leaf keys before removing them.<a href="#section-7-10.8" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-10.8">
+          <p id="section-7-10.8.1">A policy on how long to allow a member to stay in a group without updating its
+leaf keys before removing them.<a href="#section-7-10.8.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-7-11">Finally, there are some additional application-defined behaviors that are
 partially an individual application's decision but may overlap with
 interoperability:<a href="#section-7-11" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7-12.1">If there's any policy on how or when to pad messages.<a href="#section-7-12.1" class="pilcrow">¶</a>
+<li class="normal" id="section-7-12.1">
+          <p id="section-7-12.1.1">If there's any policy on how or when to pad messages.<a href="#section-7-12.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-12.2">If there is any policy for when to send a reinitialization proposal.<a href="#section-7-12.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-12.2">
+          <p id="section-7-12.2.1">If there is any policy for when to send a reinitialization proposal.<a href="#section-7-12.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-12.3">How often clients should update their leaf keys.<a href="#section-7-12.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-12.3">
+          <p id="section-7-12.3.1">How often clients should update their leaf keys.<a href="#section-7-12.3.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-12.4">Whether to prefer sending full commits or partial/empty commits.<a href="#section-7-12.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-12.4">
+          <p id="section-7-12.4.1">Whether to prefer sending full commits or partial/empty commits.<a href="#section-7-12.4.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-7-12.5">Whether there should be a <code>required_capabilities</code> extension in groups.<a href="#section-7-12.5" class="pilcrow">¶</a>
+        <li class="normal" id="section-7-12.5">
+          <p id="section-7-12.5.1">Whether there should be a <code>required_capabilities</code> extension in groups.<a href="#section-7-12.5.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 </section>
@@ -2559,12 +2632,15 @@ interoperability:<a href="#section-7-11" class="pilcrow">¶</a></p>
 attacker has complete control of the network. It is intended to provide the
 security services described in the face of such attackers.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8-2.1">The attacker can monitor the entire network.<a href="#section-8-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-8-2.1">
+          <p id="section-8-2.1.1">The attacker can monitor the entire network.<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-2.2">The attacker can read unprotected messages.<a href="#section-8-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-8-2.2">
+          <p id="section-8-2.2.1">The attacker can read unprotected messages.<a href="#section-8-2.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-8-2.3">The attacker can generate, inject and delete any message in the unprotected
-transport layer.<a href="#section-8-2.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-8-2.3">
+          <p id="section-8-2.3.1">The attacker can generate, inject and delete any message in the unprotected
+transport layer.<a href="#section-8-2.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-8-3">In addition, these guarantees are intended to degrade gracefully in the presence
@@ -2587,8 +2663,9 @@ transport MLS messages.
 However, the MLS protocol is designed to consider the following
 threat-model:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8.1-2.1">The attacker can read, write, and delete arbitrary messages inside the secure
-transport channel.<a href="#section-8.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-8.1-2.1">
+            <p id="section-8.1-2.1.1">The attacker can read, write, and delete arbitrary messages inside the secure
+transport channel.<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-8.1-3">This departs from most threat models where we consider that the secure channel
@@ -2856,16 +2933,21 @@ protocol.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
 <p id="section-8.3-2">In this section we will explore the consequences and recommendations regarding
 the following compromise scenarios:<a href="#section-8.3-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8.3-3.1">The attacker has access to a specific symmetric encryption key<a href="#section-8.3-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-8.3-3.1">
+            <p id="section-8.3-3.1.1">The attacker has access to a specific symmetric encryption key<a href="#section-8.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-3.2">The attacker has access to the group secrets for one group<a href="#section-8.3-3.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-8.3-3.2">
+            <p id="section-8.3-3.2.1">The attacker has access to the group secrets for one group<a href="#section-8.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-3.3">The attacker has access to a signature oracle for any group<a href="#section-8.3-3.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-8.3-3.3">
+            <p id="section-8.3-3.3.1">The attacker has access to a signature oracle for any group<a href="#section-8.3-3.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-3.4">The attacker has access to the signature key for one group<a href="#section-8.3-3.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-8.3-3.4">
+            <p id="section-8.3-3.4.1">The attacker has access to the signature key for one group<a href="#section-8.3-3.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-8.3-3.5">The attacker has access to all secrets of a user for all groups (full state
-compromise)<a href="#section-8.3-3.5" class="pilcrow">¶</a>
+          <li class="normal" id="section-8.3-3.5">
+            <p id="section-8.3-3.5.1">The attacker has access to all secrets of a user for all groups (full state
+compromise)<a href="#section-8.3-3.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-8.3-4">The MLS protocol provides per-sender chains of AEAD keys that are generated from
@@ -3091,17 +3173,21 @@ ACLs, hence be outside of the capabilities of the attacker.<a href="#section-8.3
 device and the Delivery Service or the Authentication Service. In particular
 when:<a href="#section-8.4.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8.4.1.1-2.1">The application connects to the Authentication Service to generate or validate
-a new credential before distributing it.<a href="#section-8.4.1.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-8.4.1.1-2.1">
+                <p id="section-8.4.1.1-2.1.1">The application connects to the Authentication Service to generate or validate
+a new credential before distributing it.<a href="#section-8.4.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-8.4.1.1-2.2">The application fetches credentials at the Delivery Service prior to creating
-a messaging group (one-to-one or more than two clients).<a href="#section-8.4.1.1-2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-8.4.1.1-2.2">
+                <p id="section-8.4.1.1-2.2.1">The application fetches credentials at the Delivery Service prior to creating
+a messaging group (one-to-one or more than two clients).<a href="#section-8.4.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-8.4.1.1-2.3">The application fetches service provider information or messages on the
-Delivery Service.<a href="#section-8.4.1.1-2.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-8.4.1.1-2.3">
+                <p id="section-8.4.1.1-2.3.1">The application fetches service provider information or messages on the
+Delivery Service.<a href="#section-8.4.1.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-8.4.1.1-2.4">The application sends service provider information or messages to the Delivery
-Service.<a href="#section-8.4.1.1-2.4" class="pilcrow">¶</a>
+              <li class="normal" id="section-8.4.1.1-2.4">
+                <p id="section-8.4.1.1-2.4.1">The application sends service provider information or messages to the Delivery
+Service.<a href="#section-8.4.1.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-8.4.1.1-3">In all these cases, the application will often connect to the device via a
@@ -3210,13 +3296,17 @@ infrastructure.<a href="#section-8.4.2.1-7.1.1" class="pilcrow">¶</a></p>
 most designs, a compromised AS is a serious matter, as the AS can serve
 incorrect or attacker-provided identities to clients.<a href="#section-8.4.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-8.4.3-2.1">The attacker can link an identity to a credential<a href="#section-8.4.3-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-8.4.3-2.1">
+              <p id="section-8.4.3-2.1.1">The attacker can link an identity to a credential<a href="#section-8.4.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-8.4.3-2.2">The attacker can generate new credentials<a href="#section-8.4.3-2.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-8.4.3-2.2">
+              <p id="section-8.4.3-2.2.1">The attacker can generate new credentials<a href="#section-8.4.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-8.4.3-2.3">The attacker can sign new credentials<a href="#section-8.4.3-2.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-8.4.3-2.3">
+              <p id="section-8.4.3-2.3.1">The attacker can sign new credentials<a href="#section-8.4.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-8.4.3-2.4">The attacker can publish or distribute credentials<a href="#section-8.4.3-2.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-8.4.3-2.4">
+              <p id="section-8.4.3-2.4.1">The attacker can publish or distribute credentials<a href="#section-8.4.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-8.4.3-3">It is possible for a system to have a centralized server generate signature key
@@ -3505,7 +3595,7 @@ guarantees provided by MLS.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-mls-extensions">[I-D.ietf-mls-extensions]</dt>
         <dd>
-<span class="refAuthor">Robert, R.</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Extensions"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-extensions-02</span>, <time datetime="2023-09-09" class="refDate">9 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-02">https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Robert, R.</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Extensions"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-extensions-03</span>, <time datetime="2023-10-23" class="refDate">23 October 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-03">https://datatracker.ietf.org/doc/html/draft-ietf-mls-extensions-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-mls-federation">[I-D.ietf-mls-federation]</dt>
         <dd>
