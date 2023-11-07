@@ -2078,7 +2078,7 @@ must agree on the order in which changes are applied.  Concretely, the group
 must agree on a single MLS Commit message that ends each epoch and begins the
 next one.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2-3">In practice, there's a realistic risk of two members generating Commit messages
-at the same time, based on the same counter, and both attempting to send them to
+at the same time, based on the same epoch, and both attempting to send them to
 the group at the same time. The extent to which this is a problem, and the
 appropriate solution, depends on the design of the Delivery Service. Per the CAP
 theorem <span>[<a href="#CAPBR" class="cite xref">CAPBR</a>]</span>, there are two general classes of distributed system that the
@@ -2100,11 +2100,12 @@ are described in the next two subsections.<a href="#section-5.2-5" class="pilcro
 <p id="section-5.2-6">However, note that a malicious Delivery Service could also reorder messages or
 provide an inconsistent view to different users.  The "generation" counter in
 MLS messages provides per-sender loss detection and ordering that cannot be
-manipulated by the DS.  A mechanism for more robust protections is discussed in
-<span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>.  A DS can cause a partition in the group by
+manipulated by the DS, but this does not provide complete protection against
+partitioning.  A DS can cause a partition in the group by
 partitioning key exchange messages; this can be detected only by out-of-band
 comparison (e.g., confirming that all clients have the same
-<code>epoch_authenticator</code> value`).<a href="#section-5.2-6" class="pilcrow">¶</a></p>
+<code>epoch_authenticator</code> value`). A mechanism for more robust protections is discussed in
+<span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>.<a href="#section-5.2-6" class="pilcrow">¶</a></p>
 <p id="section-5.2-7">Other forms of Delivery Service misbehavior are still possible that are not easy
 to detect. For instance, a Delivery Service can simply refuse to relay messages
 to and from a given client. Without some sort of side information, other clients
