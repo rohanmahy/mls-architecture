@@ -129,14 +129,15 @@ Table of Contents
        8.2.3.  Non-Repudiation vs Deniability
        8.2.4.  Associating a User's Clients
      8.3.  Endpoint Compromise
-       8.3.1.  Compromise of AEAD key material
-       8.3.2.  Compromise of the Group Secrets of a single group for
+       8.3.1.  Compromise of Application Ratchet Key material
+       8.3.2.  Compromise of Ratchet Secret material
+       8.3.3.  Compromise of the Group Secrets of a single group for
                one or more group epochs
-       8.3.3.  Compromise by an active adversary with the ability to
+       8.3.4.  Compromise by an active adversary with the ability to
                sign messages
-       8.3.4.  Compromise of the authentication with access to a
+       8.3.5.  Compromise of the authentication with access to a
                signature key
-       8.3.5.  Security consideration in the context of a full state
+       8.3.6.  Security consideration in the context of a full state
                compromise
      8.4.  Service Node Compromise
        8.4.1.  General considerations
@@ -1484,7 +1485,9 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    In this section we will explore the consequences and recommendations
    regarding the following compromise scenarios:
 
-   *  The attacker has access to a specific symmetric encryption key
+   *  The attacker has access to a symmetric encryption key
+
+   *  The attacker has access to a application ratchet secret
 
    *  The attacker has access to the group secrets for one group
 
@@ -1503,22 +1506,27 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    additional protection as the secret exchanged within the TreeKEM
    group key agreement are public-key encrypted to subgroups with HPKE.
 
-8.3.1.  Compromise of AEAD key material
+8.3.1.  Compromise of Application Ratchet Key material
 
    In some circumstances, adversaries may have access to specific AEAD
    keys and nonces which protect an Application or a Group Operation
    message.  While this is a limited kind of compromise, it can be
    realistic in cases of implementation vulnerabilities where only part
-   of the memory leaks to the adversary.
+   of the memory leaks to the adversary.  As the application AEAD keys
+   are derived from the application ratchet secret, compromise of a
+   single application ratchet key does not imply compromise of any other
+   AEAD key or nonce.
 
-   When an AEAD key is compromised, the adversary has access to a set of
-   AEAD keys for the same chain and the same epoch, hence can decrypt
-   messages sent using keys of this chain.  An adversary cannot send a
-   message to a group which appears to be from any valid client since
-   they cannot forge the signature.
+8.3.2.  Compromise of Ratchet Secret material
+
+   When an Ratchet Secret is compromised, the adversary has access to a
+   set of AEAD keys for the same chain and the same epoch, hence can
+   decrypt messages sent using keys of this chain.  An adversary cannot
+   send a message to a group which appears to be from any valid client
+   since they cannot forge the signature.
 
    The MLS protocol will ensure that an adversary cannot compute any
-   previous AEAD keys for the same epoch, or any other epochs.  Because
+   secret anterior for the same epoch, or for any other epochs.  Because
    of its Forward Secrecy guarantees, MLS will also retain secrecy of
    all other AEAD keys generated for _other_ MLS clients, outside this
    dedicated chain of AEAD keys and nonces, even within the epoch of the
@@ -1558,7 +1566,7 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    encrypted message only guarantees that some member of the group sent
    the message.
 
-8.3.2.  Compromise of the Group Secrets of a single group for one or
+8.3.3.  Compromise of the Group Secrets of a single group for one or
         more group epochs
 
    An adversary who gains access to a set Group secrets--as when a
@@ -1586,7 +1594,7 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    messages exchanged in the epochs after the compromised party has been
    removed.
 
-8.3.3.  Compromise by an active adversary with the ability to sign
+8.3.4.  Compromise by an active adversary with the ability to sign
         messages
 
    Under such a scenario, where an active adversary has compromised an
@@ -1616,7 +1624,7 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    group and to the infrastructure as they need to have access to group
    secrets to compute the encryption keys or the membership tag.
 
-8.3.4.  Compromise of the authentication with access to a signature key
+8.3.5.  Compromise of the authentication with access to a signature key
 
    The difference between having access to the value of the signature
    key and only having access to a signing oracle is not about the
@@ -1654,7 +1662,7 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
       an HSM or dedicated hardware features to allow recovery of the
       authentication for future messages after a compromise.
 
-8.3.5.  Security consideration in the context of a full state compromise
+8.3.6.  Security consideration in the context of a full state compromise
 
    In real-world compromise scenarios, it is often the case that
    adversaries target specific devices to obtain parts of the memory or
