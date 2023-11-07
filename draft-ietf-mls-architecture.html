@@ -1913,7 +1913,7 @@ unable to decrypt it for some reason.<a href="#section-3.7-3" class="pilcrow">¶
       <h2 id="name-authentication-service">
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-authentication-service" class="section-name selfRef">Authentication Service</a>
       </h2>
-<p id="section-4-1">The Authentication Service (AS) has to provide three functionalities:<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">The Authentication Service (AS) has to provide three services:<a href="#section-4-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4-2">
 <li id="section-4-2.1">
           <p id="section-4-2.1.1">Issue credentials to clients that attest to bindings between identities and
@@ -1945,7 +1945,7 @@ function would correspond to certificate verification by clients.<a href="#secti
 key fingerprints for authentication.  In this scenario, the issuance function
 is simply the generation of a key pair (i.e., a credential is just an
 identifier and public key, with no information to assist in verification).
-The verification function is the application functionality that enables users
+The verification function is the application function that enables users
 to verify keys.<a href="#section-4-5.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-4-5.3">
@@ -1958,10 +1958,10 @@ their identity.<a href="#section-4-5.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-4-6">By the nature of its roles in MLS authentication, the AS is invested with a
-large amount of trust and the compromise of one of its functionalities could
+large amount of trust and the compromise of one the AS could
 allow an adversary to, among other things, impersonate group members. We discuss
 security considerations regarding the compromise of the different AS
-functionalities in detail in <a href="#as-compromise" class="auto internal xref">Section 8.4.3</a>.<a href="#section-4-6" class="pilcrow">¶</a></p>
+functions in detail in <a href="#as-compromise" class="auto internal xref">Section 8.4.3</a>.<a href="#section-4-6" class="pilcrow">¶</a></p>
 <p id="section-4-7">The association between members' identities and signature keys is fairly
 flexible in MLS.  As noted above, there is no requirement that all clients
 belonging to a given user use the same key pair (in fact, such key reuse is
@@ -2202,8 +2202,9 @@ not allow for or support addition or removal of group members without informing
 all other members.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <p id="section-6.1-3">Membership of an MLS group is managed at the level of individual clients.  In
 most cases, a client corresponds to a specific device used by a user. If a user
-has multiple devices, the user will be represented in a group by multiple
-clients.  If an application wishes to implement operations at the level of
+has multiple devices, the user will generally be represented in a group by multiple
+clients (although applications could choose to have devices share keying material).
+If an application wishes to implement operations at the level of
 users, it is up to the application to track which clients belong to a given user
 and ensure that they are added / removed consistently.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 <p id="section-6.1-4">MLS provides two mechanisms for changing the membership of a group.  The primary
@@ -2225,8 +2226,8 @@ that an unauthorized member is able to join, MLS enables any member to remove
 them.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <p id="section-6.1-6">Application setup may also determine other criteria for membership validity. For
 example, per-device signature keys can be signed by an identity key recognized
-by other participants. If a certificate chain is used to sign off on device
-signature keys, then revocation by the owner adds an alternative flag to prompt
+by other participants. If a certificate chain is used to authenticate device
+signature keys, then revocation by the owner adds an alternative mechanism to prompt
 membership removal.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <p id="section-6.1-7">An MLS group's secrets change on every change of membership, so each client only
 has access to the secrets used by the group while they are a member.  Messages
@@ -2249,15 +2250,15 @@ set of members of any group may or may not form a subset of the members of
 another group. MLS guarantees that the FS and PCS goals within a given group are
 maintained and not weakened by user membership in multiple groups. However,
 actions in other groups likewise do not strengthen the FS and PCS guarantees
-within a given group, e.g. key updates within a given group following a device
+within a given group, e.g., key updates within a given group following a device
 compromise does not provide PCS healing in other groups; each group must be
-updated separately to achieve internal goals.  This also applies to future
-groups that a member has yet to join, that are likewise unaffected by updates
+updated separately to achieve these security objectives.  This also applies to future
+groups that a member has yet to join, which are likewise unaffected by updates
 performed in current groups.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">Applications may strengthen connectivity among parallel groups by requiring
+<p id="section-6.2-2">Applications can strengthen connectivity among parallel groups by requiring
 periodic key updates from a user across all groups in which they have
 membership.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">Applications may use the PSK mechanism to link healing properties among parallel
+<p id="section-6.2-3">Applications can use the PSK mechanism to link healing properties among parallel
 groups.  For example, suppose a common member M of two groups A and B has
 performed a key update in group A but not in group B.  The key update provides
 PCS with regard to M in group A.  If a PSK is exported from group A and injected
@@ -2284,9 +2285,10 @@ delivering messages asynchronously and reliably.<a href="#section-6.3-2" class="
         <h3 id="name-access-control">
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-access-control" class="section-name selfRef">Access Control</a>
         </h3>
-<p id="section-6.4-1">The MLS protocol allows each member of the messaging group to perform operations
-equally. This is because all clients within a group (members) have access to the
-shared cryptographic material. However, every service/infrastructure has control
+<p id="section-6.4-1">Because all clients within a group (members) have access to the shared
+cryptographic material, MLS protocol allows each member of the
+messaging group to perform operations,
+However, every service/infrastructure has control
 over policies applied to its own clients. Applications managing MLS clients can
 be configured to allow for specific group operations. On the one hand, an
 application could decide that a group administrator will be the only member to
@@ -2304,8 +2306,8 @@ collect the signatures on the handshake messages and use them for tracking.<a hr
 privacy issues related to non-encrypted signatures.<a href="#section-6.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.4-5">Note that in the default case of encrypted handshake messages, any access
-control policies will be applied at the client, so the application must ensure
+<p id="section-6.4-5">If handshake messages are encrypted, any access
+control policies must be applied at the client, so the application must ensure
 that the access control policies are consistent across all clients to make sure
 that they remain in sync.  If two different policies were applied, the clients
 might not accept or reject a group operation and end-up in different
@@ -2397,7 +2399,7 @@ membership.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
 device can be added to a group and be considered as a new client by the
 protocol. This client will not gain access to the history even if it is owned by
 someone who owns another member of the group.
-Restoring history is typically not allowed at the protocol level but
+MLS does not provide support for restoring history in this case, but
 applications can elect to provide such a mechanism outside of MLS.  Such
 mechanisms, if used, may reduce the FS and PCS guarantees provided by MLS.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 </section>
