@@ -1178,13 +1178,21 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
             <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
-            <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-general-setting" class="internal xref">General Setting</a></p>
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-general-setting" class="internal xref">General Setting</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.1">
+                <p id="section-toc.1-1.2.2.1.1" class="keepWithNext"><a href="#section-2.1" class="auto internal xref">2.1</a>.  <a href="#name-protocol-overview" class="internal xref">Protocol Overview</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.2">
+                <p id="section-toc.1-1.2.2.2.1" class="keepWithNext"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-abstract-services" class="internal xref">Abstract Services</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-overview-of-operation" class="internal xref">Overview of Operation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
-                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-step-1-account-creation" class="internal xref">Step 1: Account Creation</a></p>
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-step-1-account-creation" class="internal xref">Step 1: Account Creation</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
                 <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-step-2-initial-keying-mater" class="internal xref">Step 2: Initial Keying Material</a></p>
@@ -1406,57 +1414,91 @@ all users, for all group sizes, including groups of only two clients.<a href="#s
       <h2 id="name-general-setting">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-general-setting" class="section-name selfRef">General Setting</a>
       </h2>
-<p id="section-2-1">MLS provides a way for <em>clients</em> to form <em>groups</em> within which they can
+<div id="protocol-overview">
+<section id="section-2.1">
+        <h3 id="name-protocol-overview">
+<a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-protocol-overview" class="section-name selfRef">Protocol Overview</a>
+        </h3>
+<p id="section-2.1-1">MLS provides a way for <em>clients</em> to form <em>groups</em> within which they can
 communicate securely.  For example, a set of users might use clients on their
 phones or laptops to join a group and communicate with each other. A group may
 be as small as two clients (e.g., for simple person to person messaging) or as
 large as tens of thousands.  A client that is part of a group is a <em>member</em> of that
-group. A user might have multiple MLS clients associated with the
-same identity, for instance if they have different devices.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">MLS is designed to operate within the context of a messaging service, which
+group. As groups change membership and group or member properties, they
+advance from one <em>epoch</em> to another and the cryptographic state of the
+group evolves.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The group is represented as a tree, which represents the members
+as the leaves of a tree. It is used to efficiently encrypt to subsets of the
+members. Each member has a <em>LeafNode</em> object in the tree holding the client's
+identity, credentials, and capabilities.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.1-3">Various messages are used in the evolution from epoch to epoch.
+A <em>Proposal</em> message proposes
+a change to be made in the next epoch, such as adding or removing a member.
+A <em>Commit</em> message initiates a new epoch by instructing members of the group to
+implement a collection of proposals. Proposals and Commits are collectively
+called <em>Handshake messages</em>.
+A <em>KeyPackage</em> provides keys that can be used to add the client to a group,
+including its LeafNode, and <em>Signature Key</em>.
+A <em>Welcome</em> message provides a new member to the group with the information to
+initialize their state for the epoch in which they were added.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.1-4">Of course most (but not all) applications use MLS to send encrypted group messages.
+An <em>application message</em> is an MLS message with an arbitrary application payload.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.1-5">Finally, a <em>PublicMessage</em> contains an integrity-protected MLS Handshake message,
+while a <em>PrivateMessage</em> contains a confidential, integrity-protected Handshake
+or application message.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-6">For a more
+detailed explanation of these terms, please consult the MLS protocol specification <span>[<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>.<a href="#section-2.1-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="abstract-services">
+<section id="section-2.2">
+        <h3 id="name-abstract-services">
+<a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-abstract-services" class="section-name selfRef">Abstract Services</a>
+        </h3>
+<p id="section-2.2-1">MLS is designed to operate within the context of a messaging service, which
 may be a single service provider, a federated system, or some kind of
 peer-to-peer system. The service needs to provide two services that
-facilitate client communication using MLS:<a href="#section-2-2" class="pilcrow">¶</a></p>
+facilitate client communication using MLS:<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-3.1">
-          <p id="section-2-3.1.1">An Authentication Service (AS) which is responsible for
+<li class="normal" id="section-2.2-2.1">
+            <p id="section-2.2-2.1.1">An Authentication Service (AS) which is responsible for
 attesting to bindings between application-meaningful identifiers and the
 public key material used for authentication in the MLS protocol. The
 AS must also be able to generate credentials that encode these
-bindings and validate credentials provided by MLS clients.<a href="#section-2-3.1.1" class="pilcrow">¶</a></p>
+bindings and validate credentials provided by MLS clients.<a href="#section-2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-3.2">
-          <p id="section-2-3.2.1">A Delivery Service (DS)  which can receive and distribute
+          <li class="normal" id="section-2.2-2.2">
+            <p id="section-2.2-2.2.1">A Delivery Service (DS)  which can receive and distribute
 messages between group members. In the case of group messaging, the delivery
 service may also be responsible for acting as a "broadcaster" where the sender
 sends a single message which is then forwarded to each recipient in the group
 by the DS. The DS is also responsible for storing and delivering initial
 public key material required by MLS clients in order to proceed with the group
-secret key establishment that is part of the MLS protocol.<a href="#section-2-3.2.1" class="pilcrow">¶</a></p>
+secret key establishment that is part of the MLS protocol.<a href="#section-2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-2-4">For presentation purposes, this document treats the AS and DS as conventional
+        </ul>
+<p id="section-2.2-3">For presentation purposes, this document treats the AS and DS as conventional
 network services, however MLS does not require a specific implementation
 for the AS or DS. These services may reside on the same server or different
 servers, they may be distributed between server and client components, and they
-may even involve some action by users.  For example:<a href="#section-2-4" class="pilcrow">¶</a></p>
+may even involve some action by users.  For example:<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2-5.1">
-          <p id="section-2-5.1.1">Several secure messaging services today provide a centralized DS, and rely on
-manual comparison of clients' public keys as the AS.<a href="#section-2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2.2-4.1">
+            <p id="section-2.2-4.1.1">Several secure messaging services today provide a centralized DS, and rely on
+manual comparison of clients' public keys as the AS.<a href="#section-2.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-5.2">
-          <p id="section-2-5.2.1">MLS clients connected to a peer-to-peer network could instantiate a
-decentralized DS by transmitting MLS messages over that network.<a href="#section-2-5.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-2.2-4.2">
+            <p id="section-2.2-4.2.1">MLS clients connected to a peer-to-peer network could instantiate a
+decentralized DS by transmitting MLS messages over that network.<a href="#section-2.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-2-5.3">
-          <p id="section-2-5.3.1">In an MLS group using a Public Key Infrastructure (PKI) for authentication,
+          <li class="normal" id="section-2.2-4.3">
+            <p id="section-2.2-4.3.1">In an MLS group using a Public Key Infrastructure (PKI) for authentication,
 the AS would comprise the certificate issuance and validation processes,
 both of which involve logic inside MLS clients as well as various
-existing PKI roles (ex: Certification Authorities).<a href="#section-2-5.3.1" class="pilcrow">¶</a></p>
+existing PKI roles (ex: Certification Authorities).<a href="#section-2.2-4.3.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-2-6">It is important to note that the Authentication Service can be
+        </ul>
+<p id="section-2.2-5">It is important to note that the Authentication Service can be
 completely abstract in the case of a Service Provider which allows MLS
 clients to generate, distribute, and validate credentials themselves.
 As with the AS, the Delivery Service can be completely abstract if
@@ -1464,80 +1506,82 @@ users are able to distribute credentials and messages without relying
 on a central Delivery Service (as in a peer-to-peer system).  Note,
 though, that in such scenarios, clients will need to implement logic
 that assures the delivery properties required of the DS (see
-<a href="#delivery-guarantees" class="auto internal xref">Section 5.2</a>).<a href="#section-2-6" class="pilcrow">¶</a></p>
+<a href="#delivery-guarantees" class="auto internal xref">Section 5.2</a>).<a href="#section-2.2-5" class="pilcrow">¶</a></p>
 <span id="name-a-simplified-messaging-syst"></span><div id="fig-mls-overview">
 <figure id="figure-1">
-        <div id="section-2-7.1">
-          <div class="alignLeft art-svg artwork" id="section-2-7.1.1">
+          <div id="section-2.2-6.1">
+            <div class="alignLeft art-svg artwork" id="section-2.2-6.1.1">
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="256" width="456" viewBox="0 0 456 256" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
-              <path d="M 8,32 L 8,80" fill="none" stroke="black"></path>
-              <path d="M 80,144 L 80,176" fill="none" stroke="black"></path>
-              <path d="M 144,32 L 144,80" fill="none" stroke="black"></path>
-              <path d="M 168,144 L 168,176" fill="none" stroke="black"></path>
-              <path d="M 184,32 L 184,80" fill="none" stroke="black"></path>
-              <path d="M 208,144 L 208,176" fill="none" stroke="black"></path>
-              <path d="M 248,80 L 248,144" fill="none" stroke="black"></path>
-              <path d="M 296,144 L 296,176" fill="none" stroke="black"></path>
-              <path d="M 304,32 L 304,80" fill="none" stroke="black"></path>
-              <path d="M 336,144 L 336,176" fill="none" stroke="black"></path>
-              <path d="M 424,144 L 424,176" fill="none" stroke="black"></path>
-              <path d="M 8,32 L 144,32" fill="none" stroke="black"></path>
-              <path d="M 184,32 L 304,32" fill="none" stroke="black"></path>
-              <path d="M 8,80 L 144,80" fill="none" stroke="black"></path>
-              <path d="M 184,80 L 304,80" fill="none" stroke="black"></path>
-              <path d="M 80,144 L 168,144" fill="none" stroke="black"></path>
-              <path d="M 208,144 L 296,144" fill="none" stroke="black"></path>
-              <path d="M 336,144 L 424,144" fill="none" stroke="black"></path>
-              <path d="M 80,176 L 168,176" fill="none" stroke="black"></path>
-              <path d="M 208,176 L 296,176" fill="none" stroke="black"></path>
-              <path d="M 336,176 L 424,176" fill="none" stroke="black"></path>
-              <path d="M 304,80 L 336,144" fill="none" stroke="black"></path>
-              <path d="M 152,144 L 184,80" fill="none" stroke="black"></path>
-              <g class="text">
-                <text x="76" y="52">Authentication</text>
-                <text x="244" y="52">Delivery</text>
-                <text x="56" y="68">Service</text>
-                <text x="108" y="68">(AS)</text>
-                <text x="224" y="68">Service</text>
-                <text x="276" y="68">(DS)</text>
-                <text x="432" y="100">Group</text>
-                <text x="212" y="116">........</text>
-                <text x="284" y="116">........</text>
-                <text x="388" y="116">................</text>
-                <text x="184" y="132">.</text>
-                <text x="448" y="132">.</text>
-                <text x="184" y="148">.</text>
-                <text x="448" y="148">.</text>
-                <text x="116" y="164">Client</text>
-                <text x="152" y="164">1</text>
-                <text x="184" y="164">.</text>
-                <text x="244" y="164">Client</text>
-                <text x="280" y="164">2</text>
-                <text x="372" y="164">Client</text>
-                <text x="408" y="164">3</text>
-                <text x="448" y="164">.</text>
-                <text x="184" y="180">.</text>
-                <text x="448" y="180">.</text>
-                <text x="184" y="196">.</text>
-                <text x="236" y="196">Member</text>
-                <text x="272" y="196">1</text>
-                <text x="364" y="196">Member</text>
-                <text x="400" y="196">2</text>
-                <text x="448" y="196">.</text>
-                <text x="184" y="212">.</text>
-                <text x="448" y="212">.</text>
-                <text x="316" y="228">..................................</text>
-              </g>
-            </svg><a href="#section-2-7.1.1" class="pilcrow">¶</a>
+                <path d="M 8,32 L 8,80" fill="none" stroke="black"></path>
+                <path d="M 80,144 L 80,176" fill="none" stroke="black"></path>
+                <path d="M 144,32 L 144,80" fill="none" stroke="black"></path>
+                <path d="M 168,144 L 168,176" fill="none" stroke="black"></path>
+                <path d="M 184,32 L 184,80" fill="none" stroke="black"></path>
+                <path d="M 208,144 L 208,176" fill="none" stroke="black"></path>
+                <path d="M 248,80 L 248,144" fill="none" stroke="black"></path>
+                <path d="M 296,144 L 296,176" fill="none" stroke="black"></path>
+                <path d="M 304,32 L 304,80" fill="none" stroke="black"></path>
+                <path d="M 336,144 L 336,176" fill="none" stroke="black"></path>
+                <path d="M 424,144 L 424,176" fill="none" stroke="black"></path>
+                <path d="M 8,32 L 144,32" fill="none" stroke="black"></path>
+                <path d="M 184,32 L 304,32" fill="none" stroke="black"></path>
+                <path d="M 8,80 L 144,80" fill="none" stroke="black"></path>
+                <path d="M 184,80 L 304,80" fill="none" stroke="black"></path>
+                <path d="M 80,144 L 168,144" fill="none" stroke="black"></path>
+                <path d="M 208,144 L 296,144" fill="none" stroke="black"></path>
+                <path d="M 336,144 L 424,144" fill="none" stroke="black"></path>
+                <path d="M 80,176 L 168,176" fill="none" stroke="black"></path>
+                <path d="M 208,176 L 296,176" fill="none" stroke="black"></path>
+                <path d="M 336,176 L 424,176" fill="none" stroke="black"></path>
+                <path d="M 304,80 L 336,144" fill="none" stroke="black"></path>
+                <path d="M 152,144 L 184,80" fill="none" stroke="black"></path>
+                <g class="text">
+                  <text x="76" y="52">Authentication</text>
+                  <text x="244" y="52">Delivery</text>
+                  <text x="56" y="68">Service</text>
+                  <text x="108" y="68">(AS)</text>
+                  <text x="224" y="68">Service</text>
+                  <text x="276" y="68">(DS)</text>
+                  <text x="432" y="100">Group</text>
+                  <text x="212" y="116">........</text>
+                  <text x="284" y="116">........</text>
+                  <text x="388" y="116">................</text>
+                  <text x="184" y="132">.</text>
+                  <text x="448" y="132">.</text>
+                  <text x="184" y="148">.</text>
+                  <text x="448" y="148">.</text>
+                  <text x="116" y="164">Client</text>
+                  <text x="152" y="164">1</text>
+                  <text x="184" y="164">.</text>
+                  <text x="244" y="164">Client</text>
+                  <text x="280" y="164">2</text>
+                  <text x="372" y="164">Client</text>
+                  <text x="408" y="164">3</text>
+                  <text x="448" y="164">.</text>
+                  <text x="184" y="180">.</text>
+                  <text x="448" y="180">.</text>
+                  <text x="184" y="196">.</text>
+                  <text x="236" y="196">Member</text>
+                  <text x="272" y="196">1</text>
+                  <text x="364" y="196">Member</text>
+                  <text x="400" y="196">2</text>
+                  <text x="448" y="196">.</text>
+                  <text x="184" y="212">.</text>
+                  <text x="448" y="212">.</text>
+                  <text x="316" y="228">..................................</text>
+                </g>
+              </svg><a href="#section-2.2-6.1.1" class="pilcrow">¶</a>
 </div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-a-simplified-messaging-syst" class="selfRef">A Simplified Messaging System</a>
-        </figcaption></figure>
+          </figcaption></figure>
 </div>
-<p id="section-2-8"><a href="#fig-mls-overview" class="auto internal xref">Figure 1</a> shows the relationship of these concepts,
+<p id="section-2.2-7"><a href="#fig-mls-overview" class="auto internal xref">Figure 1</a> shows the relationship of these concepts,
 with three clients and one group, and clients 2 and 3 being
-part of the group and client 1 not being part of any group.<a href="#section-2-8" class="pilcrow">¶</a></p>
+part of the group and client 1 not being part of any group.<a href="#section-2.2-7" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="overview-of-operation">
