@@ -937,9 +937,9 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    devices.  A new device can be added to a group and be considered as a
    new client by the protocol.  This client will not gain access to the
    history even if it is owned by someone who owns another member of the
-   group.  MLS does not provide support for restoring history in this
-   case, but applications can elect to provide such a mechanism outside
-   of MLS.  Such mechanisms, if used, may reduce the FS and PCS
+   group.  MLS does not provide direct support for restoring history in
+   this case, but applications can elect to provide such a mechanism
+   outside of MLS.  Such mechanisms, if used, may reduce the FS and PCS
    guarantees provided by MLS.
 
 6.8.  Extensibility

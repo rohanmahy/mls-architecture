@@ -27,8 +27,8 @@ MLS and are instead left to the application.
        While the recommendations of this document are not mandatory to follow in order
 to interoperate at the protocol level, they affect the overall security
 guarantees that are achieved by a messaging application. This is especially true
-in the case of active adversaries that are able to compromise clients, the delivery
-service, or the authentication service. 
+in the case of active adversaries that are able to compromise clients, the
+delivery service, or the authentication service. 
     " name="description">
 <meta content="xml2rfc 3.19.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1112,8 +1112,8 @@ MLS and are instead left to the application.<a href="#section-abstract-2" class=
 <p id="section-abstract-3">While the recommendations of this document are not mandatory to follow in order
 to interoperate at the protocol level, they affect the overall security
 guarantees that are achieved by a messaging application. This is especially true
-in the case of active adversaries that are able to compromise clients, the delivery
-service, or the authentication service.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+in the case of active adversaries that are able to compromise clients, the
+delivery service, or the authentication service.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-discussion-venues">
@@ -1858,15 +1858,14 @@ a set of proposals.<a href="#section-3.6-2.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-3.6-3">The simplest pattern is for a client to just send a Commit which contains one or more Proposals,
-for instance Alice could send a Commit with the Proposal Add(Bob) embedded to add
-Bob to the group. However, there are situations in which one client
-might send a proposal and another might send the commit. For instance,
-Bob might wish to remove himself from the group and send a Remove Proposal to do so (see
-<span><a href="https://rfc-editor.org/rfc/rfc9420#section-12.1.3" class="relref">Section 12.1.3</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>). Because Bob
-cannot send the Commit, an existing member must do so.
-Commits can apply to multiple valid Proposals, in which case all the listed
-changes are applied.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.6-3">The simplest pattern is for a client to just send a Commit which contains one or
+more Proposals, for instance Alice could send a Commit with the Proposal
+Add(Bob) embedded to add Bob to the group. However, there are situations in
+which one client might send a proposal and another might send the commit. For
+instance, Bob might wish to remove himself from the group and send a Remove
+Proposal to do so (see <span><a href="https://rfc-editor.org/rfc/rfc9420#section-12.1.3" class="relref">Section 12.1.3</a> of [<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>). Because Bob cannot send
+the Commit, an existing member must do so.  Commits can apply to multiple valid
+Proposals, in which case all the listed changes are applied.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
 <p id="section-3.6-4">It is also possible for a Commit to apply to an empty set of Proposals
 in which case it just updates the cryptographic state of the group
 without changing its membership.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
@@ -1877,30 +1876,27 @@ without changing its membership.<a href="#section-3.6-4" class="pilcrow">¶</a><
         <h3 id="name-users-clients-and-groups">
 <a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-users-clients-and-groups" class="section-name selfRef">Users, Clients, and Groups</a>
         </h3>
-<p id="section-3.7-1">While it's natural to think of a messaging system as consisting of groups
-of users, possibly using different devices, in MLS the basic unit of
-operation is not the user but rather the "client".
-Formally, a client is a set of cryptographic objects composed of
-public values such as a name (an identity), a public encryption key,
-and a public signature key. As usual, a user demonstrates ownership of
-the client by demonstrating knowledge of the associated secret
+<p id="section-3.7-1">While it's natural to think of a messaging system as consisting of groups of
+users, possibly using different devices, in MLS the basic unit of operation is
+not the user but rather the "client".  Formally, a client is a set of
+cryptographic objects composed of public values such as a name (an identity), a
+public encryption key, and a public signature key. As usual, a user demonstrates
+ownership of the client by demonstrating knowledge of the associated secret
 values.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.7-2">In some messaging systems, clients belonging to the same user
-must all share the same signature key pair, but MLS does not assume
-this; instead a user may have multiple clients with the same identity
-and different keys. In this case, each client will have its own
-cryptographic state, and it is up to the application to determine
-how to present this situation to users. For instance, it may render
-messages to and from a given user identically regardless of which
-client they are associated with, or may choose to distinguish them.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
-<p id="section-3.7-3">When a client is part of a Group, it is called a Member.  A group in
-MLS is defined as the set of clients that have knowledge of the shared
-group secret established in the group key establishment phase.
-Note that until a client has been added to the group and contributed to the group
-secret in a manner verifiable by other members of the group, other members
-cannot assume that the client is a member of the group; for instance, the
-newly added member might not have received the Welcome message or been
-unable to decrypt it for some reason.<a href="#section-3.7-3" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">In some messaging systems, clients belonging to the same user must all share the
+same signature key pair, but MLS does not assume this; instead a user may have
+multiple clients with the same identity and different keys. In this case, each
+client will have its own cryptographic state, and it is up to the application to
+determine how to present this situation to users. For instance, it may render
+messages to and from a given user identically regardless of which client they
+are associated with, or may choose to distinguish them.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+<p id="section-3.7-3">When a client is part of a Group, it is called a Member.  A group in MLS is
+defined as the set of clients that have knowledge of the shared group secret
+established in the group key establishment phase.  Note that until a client has
+been added to the group and contributed to the group secret in a manner
+verifiable by other members of the group, other members cannot assume that the
+client is a member of the group; for instance, the newly added member might not
+have received the Welcome message or been unable to decrypt it for some reason.<a href="#section-3.7-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2099,10 +2095,10 @@ are described in the next two subsections.<a href="#section-5.2-5" class="pilcro
 provide an inconsistent view to different users.  The "generation" counter in
 MLS messages provides per-sender loss detection and ordering that cannot be
 manipulated by the DS, but this does not provide complete protection against
-partitioning.  A DS can cause a partition in the group by
-partitioning key exchange messages; this can be detected only by out-of-band
-comparison (e.g., confirming that all clients have the same
-<code>epoch_authenticator</code> value`). A mechanism for more robust protections is discussed in
+partitioning.  A DS can cause a partition in the group by partitioning key
+exchange messages; this can be detected only by out-of-band comparison (e.g.,
+confirming that all clients have the same <code>epoch_authenticator</code> value`). A
+mechanism for more robust protections is discussed in
 <span>[<a href="#I-D.ietf-mls-extensions" class="cite xref">I-D.ietf-mls-extensions</a>]</span>.<a href="#section-5.2-6" class="pilcrow">¶</a></p>
 <p id="section-5.2-7">Other forms of Delivery Service misbehavior are still possible that are not easy
 to detect. For instance, a Delivery Service can simply refuse to relay messages
@@ -2199,11 +2195,11 @@ not allow for or support addition or removal of group members without informing
 all other members.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
 <p id="section-6.1-3">Membership of an MLS group is managed at the level of individual clients.  In
 most cases, a client corresponds to a specific device used by a user. If a user
-has multiple devices, the user will generally be represented in a group by multiple
-clients (although applications could choose to have devices share keying material).
-If an application wishes to implement operations at the level of
-users, it is up to the application to track which clients belong to a given user
-and ensure that they are added / removed consistently.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+has multiple devices, the user will generally be represented in a group by
+multiple clients (although applications could choose to have devices share
+keying material).  If an application wishes to implement operations at the level
+of users, it is up to the application to track which clients belong to a given
+user and ensure that they are added / removed consistently.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 <p id="section-6.1-4">MLS provides two mechanisms for changing the membership of a group.  The primary
 mechanism is for an authorized member of the group to send a Commit that adds or
 removes other members.  The second mechanism is an "external join": A member of
@@ -2251,20 +2247,19 @@ maintained and not weakened by user membership in multiple groups. However,
 actions in other groups likewise do not strengthen the FS and PCS guarantees
 within a given group, e.g., key updates within a given group following a device
 compromise does not provide PCS healing in other groups; each group must be
-updated separately to achieve these security objectives.  This also applies to future
-groups that a member has yet to join, which are likewise unaffected by updates
-performed in current groups.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+updated separately to achieve these security objectives.  This also applies to
+future groups that a member has yet to join, which are likewise unaffected by
+updates performed in current groups.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">Applications can strengthen connectivity among parallel groups by requiring
 periodic key updates from a user across all groups in which they have
 membership.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
-<p id="section-6.2-3">MLS provides a pre-shared key (PSK) that can be used to link healing
-properties among parallel groups.  For example, suppose a common
-member M of two groups A and B has performed a key update in group A
-but not in group B.  The key update provides PCS with regard to M in
-group A.  If a PSK is exported from group A and injected into group B,
-then some of these PCS properties carry over to group B, since the PSK
-and secrets derived from it are only known to the new, updated version
-of M, not to the old, possibly compromised version of M.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
+<p id="section-6.2-3">MLS provides a pre-shared key (PSK) that can be used to link healing properties
+among parallel groups.  For example, suppose a common member M of two groups A
+and B has performed a key update in group A but not in group B.  The key update
+provides PCS with regard to M in group A.  If a PSK is exported from group A and
+injected into group B, then some of these PCS properties carry over to group B,
+since the PSK and secrets derived from it are only known to the new, updated
+version of M, not to the old, possibly compromised version of M.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="asynchronous-usage">
@@ -2286,11 +2281,10 @@ delivering messages asynchronously and reliably.<a href="#section-6.3-2" class="
 <a href="#section-6.4" class="section-number selfRef">6.4. </a><a href="#name-access-control" class="section-name selfRef">Access Control</a>
         </h3>
 <p id="section-6.4-1">Because all clients within a group (members) have access to the shared
-cryptographic material, MLS protocol allows each member of the
-messaging group to perform operations,
-However, every service/infrastructure has control
-over policies applied to its own clients. Applications managing MLS clients can
-be configured to allow for specific group operations. On the one hand, an
+cryptographic material, MLS protocol allows each member of the messaging group
+to perform operations, However, every service/infrastructure has control over
+policies applied to its own clients. Applications managing MLS clients can be
+configured to allow for specific group operations. On the one hand, an
 application could decide that a group administrator will be the only member to
 perform add and remove operations. On the other hand, in many settings such as
 open discussion forums, joining can be allowed for anyone.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
@@ -2336,14 +2330,14 @@ which external joins are allowed.<a href="#section-6.4-8.1.1" class="pilcrow">¶
         <h3 id="name-handling-authentication-fai">
 <a href="#section-6.5" class="section-number selfRef">6.5. </a><a href="#name-handling-authentication-fai" class="section-name selfRef">Handling Authentication Failures</a>
         </h3>
-<p id="section-6.5-1">Within an MLS group, every member is authenticated to every other member by means of
-credentials issued and verified by the Authentication Service.  MLS does not
-prescribe what actions, if any, an application should take in the event that a
-group member presents an invalid credential.  For example, an application may
-require such a member to be immediately evicted, or may allow some grace period
-for the problem to be remediated. To avoid operational problems, it is important
-for all clients in a group to have a consistent view of which credentials in a
-group are valid, and how to respond to invalid credentials.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
+<p id="section-6.5-1">Within an MLS group, every member is authenticated to every other member by
+means of credentials issued and verified by the Authentication Service.  MLS
+does not prescribe what actions, if any, an application should take in the event
+that a group member presents an invalid credential.  For example, an application
+may require such a member to be immediately evicted, or may allow some grace
+period for the problem to be remediated. To avoid operational problems, it is
+important for all clients in a group to have a consistent view of which
+credentials in a group are valid, and how to respond to invalid credentials.<a href="#section-6.5-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-6.5-2.1">
             <p id="section-6.5-2.1.1"><strong>RECOMMENDATION:</strong> Have a uniform credential validation process to ensure
@@ -2377,8 +2371,8 @@ is about to become invalid.<a href="#section-6.5-5.1.1" class="pilcrow">¶</a></
 <p id="section-6.6-1">Group members whose local MLS state is lost or corrupted can reinitialize their
 state by re-joining the group as a new member and removing the member
 representing their earlier state.  An application can require that a client
-performing such a reinitialization prove its prior membership with a PSK
-that was exported from the prevoius state.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
+performing such a reinitialization prove its prior membership with a PSK that
+was exported from the prevoius state.<a href="#section-6.6-1" class="pilcrow">¶</a></p>
 <p id="section-6.6-2">There are a few practical challenges to this approach.  For example, the
 application will need to ensure that all members have the required PSK,
 including any new members that have joined the group since the epoch in which
@@ -2399,10 +2393,10 @@ membership.<a href="#section-6.6-3" class="pilcrow">¶</a></p>
 <p id="section-6.7-1">It is typically expected for users within a group to own various devices. A new
 device can be added to a group and be considered as a new client by the
 protocol. This client will not gain access to the history even if it is owned by
-someone who owns another member of the group.
-MLS does not provide support for restoring history in this case, but
-applications can elect to provide such a mechanism outside of MLS.  Such
-mechanisms, if used, may reduce the FS and PCS guarantees provided by MLS.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
+someone who owns another member of the group.  MLS does not provide direct
+support for restoring history in this case, but applications can elect to
+provide such a mechanism outside of MLS.  Such mechanisms, if used, may reduce
+the FS and PCS guarantees provided by MLS.<a href="#section-6.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="extensibility">
@@ -2495,14 +2489,12 @@ to potentially interoperate.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">The protocol has a built-in ability to negotiate protocol versions,
 ciphersuites, extensions, credential types, and additional proposal types. For
 two deployments to interoperate, they must have overlapping support in each of
-these categories. The <code>required_capabilities</code> extension
-(Section 7.2 of <span>[<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>) can promote
-interoperability with a wider set of clients by ensuring that certain
-functionality continues to be supported by a group, even if the clients in the
-group aren't currently relying on it.<a href="#section-7-2" class="pilcrow">¶</a></p>
-<p id="section-7-3">MLS relies on the following network services, that need
-to be compatible in order for two different deployments based on them to
-interoperate.<a href="#section-7-3" class="pilcrow">¶</a></p>
+these categories. The <code>required_capabilities</code> extension (Section 7.2 of
+<span>[<a href="#RFC9420" class="cite xref">RFC9420</a>]</span>) can promote interoperability with a wider set of clients by
+ensuring that certain functionality continues to be supported by a group, even
+if the clients in the group aren't currently relying on it.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">MLS relies on the following network services, that need to be compatible in
+order for two different deployments based on them to interoperate.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-4.1">
           <p id="section-7-4.1.1">An <strong>Authentication Service</strong>, described fully in <a href="#authentication-service" class="auto internal xref">Section 4</a>,
@@ -2568,12 +2560,11 @@ instead provide a method for external users to solicit group members (or a
 designated service) to add them to a group.<a href="#section-7-4.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7-4.3.2.4">
-              <p id="section-7-4.3.2.4.1">If the application uses PSKs that members of a group may not have
-access to (e.g., to control entry into the group or to prove
-membership in the group in the past, as in <a href="#state-loss" class="auto internal xref">Section 6.6</a>) there
-must be a method for distributing these PSKs to group members who
-might not have them, for instance if they joined the group
-after the PSK was generated.<a href="#section-7-4.3.2.4.1" class="pilcrow">¶</a></p>
+              <p id="section-7-4.3.2.4.1">If the application uses PSKs that members of a group may not have access to
+(e.g., to control entry into the group or to prove membership in the group
+in the past, as in <a href="#state-loss" class="auto internal xref">Section 6.6</a>) there must be a method for distributing
+these PSKs to group members who might not have them, for instance if they
+joined the group after the PSK was generated.<a href="#section-7-4.3.2.4.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-7-4.3.2.5">
               <p id="section-7-4.3.2.5.1">If an application wishes to detect and possibly discipline members that send
@@ -2614,9 +2605,9 @@ application messages that arrive before the Commit starting an epoch.<a href="#s
           </ul>
 </li>
       </ul>
-<p id="section-7-7">If implementations differ in these parameters, they will interoperate
-to some extent but may experience unexpected failures in certain situations,
-such as extensive message reordering.<a href="#section-7-7" class="pilcrow">¶</a></p>
+<p id="section-7-7">If implementations differ in these parameters, they will interoperate to some
+extent but may experience unexpected failures in certain situations, such as
+extensive message reordering.<a href="#section-7-7" class="pilcrow">¶</a></p>
 <p id="section-7-8">MLS provides the following locations where an application may store arbitrary
 data. The format and intention of any data in these locations must align for two
 deployments to interoperate:<a href="#section-7-8" class="pilcrow">¶</a></p>
@@ -2681,14 +2672,13 @@ commits.<a href="#section-7-11.4.2.4.1" class="pilcrow">¶</a></p>
 external joins.<a href="#section-7-11.6.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-11.7">
-          <p id="section-7-11.7.1">A policy for when two credentials represent the same client. Note
-that many credentials may be issued attesting the same identity
-but for different signature keys, because each credential
-corresponds to a different client owned by the same
-application user. However, one device may control multiple signature
-keys -- for instance if they have keys corresponding to multiple
-overlapping time periods -- but should still only be considered a
-single client.<a href="#section-7-11.7.1" class="pilcrow">¶</a></p>
+          <p id="section-7-11.7.1">A policy for when two credentials represent the same client. Note that many
+credentials may be issued attesting the same identity but for different
+signature keys, because each credential corresponds to a different client
+owned by the same application user. However, one device may control multiple
+signature keys -- for instance if they have keys corresponding to multiple
+overlapping time periods -- but should still only be considered a single
+client.<a href="#section-7-11.7.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-7-11.8">
           <p id="section-7-11.8.1">A policy on how long to allow a member to stay in a group without updating its
@@ -2722,10 +2712,10 @@ interoperability:<a href="#section-7-12" class="pilcrow">¶</a></p>
       <h2 id="name-security-and-privacy-consid">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-and-privacy-consid" class="section-name selfRef">Security and Privacy Considerations</a>
       </h2>
-<p id="section-8-1">MLS adopts the Internet threat model <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span> and therefore
-assumes that the attacker has complete control of the network. It is
-intended to provide the security services described in
-<a href="#intended-security-guarantees" class="auto internal xref">Section 8.2</a> in the face of attackers who can:<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">MLS adopts the Internet threat model <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span> and therefore assumes that the
+attacker has complete control of the network. It is intended to provide the
+security services described in <a href="#intended-security-guarantees" class="auto internal xref">Section 8.2</a> in the face of
+attackers who can:<a href="#section-8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8-2.1">
           <p id="section-8-2.1.1">Monitor the entire network.<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
@@ -2738,19 +2728,17 @@ intended to provide the security services described in
 transport layer.<a href="#section-8-2.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-8-3">While MLS should be run over a secure transport such as QUIC
-<span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> or TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, the security guarantees of MLS do
-not depend on the transport. This departs from the usual design
-practice of trusting the transport because MLS is designed to
-provide security even in the face of compromised network
-elements, especially the DS.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">Generally, MLS is designed under the
-assumption that the transport layer is present to keep metadata
-private from network observers, while the MLS protocol provides
-confidentiality, integrity, and authentication guarantees for the
-application data (which could pass through multiple
-systems). Additional properties such as partial anonymity or
-deniability could also be achieved in specific architecture designs.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-3">While MLS should be run over a secure transport such as QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> or TLS
+<span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, the security guarantees of MLS do not depend on the
+transport. This departs from the usual design practice of trusting the transport
+because MLS is designed to provide security even in the face of compromised
+network elements, especially the DS.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">Generally, MLS is designed under the assumption that the transport layer is
+present to keep metadata private from network observers, while the MLS protocol
+provides confidentiality, integrity, and authentication guarantees for the
+application data (which could pass through multiple systems). Additional
+properties such as partial anonymity or deniability could also be achieved in
+specific architecture designs.<a href="#section-8-4" class="pilcrow">¶</a></p>
 <p id="section-8-5">In addition, these guarantees are intended to degrade gracefully in the presence
 of compromise of the transport security links as well as of both clients and
 elements of the messaging system, as described in the remainder of this section.<a href="#section-8-5" class="pilcrow">¶</a></p>
@@ -2760,11 +2748,11 @@ elements of the messaging system, as described in the remainder of this section.
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-assumptions-on-transport-se" class="section-name selfRef">Assumptions on Transport Security Links</a>
         </h3>
 <p id="section-8.1-1">As discussed above, MLS provides the highest level of security when its messages
-are delivered over an encrypted transport.
-The main use of the secure transport layer for MLS is to protect the already
-limited amount of metadata. Very little information is contained in the
-unencrypted header of the MLS protocol message format for group operation
-messages, and application messages are always encrypted in MLS.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+are delivered over an encrypted transport.  The main use of the secure transport
+layer for MLS is to protect the already limited amount of metadata. Very little
+information is contained in the unencrypted header of the MLS protocol message
+format for group operation messages, and application messages are always
+encrypted in MLS.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.1-2.1">
             <p id="section-8.1-2.1.1"><strong>RECOMMENDATION:</strong> Use transports that provide reliability and metadata
@@ -2773,11 +2761,11 @@ a protocol such as TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]<
 </li>
         </ul>
 <p id="section-8.1-3">MLS avoids needing to send the full list of recipients to the server for
-dispatching messages because that list could potentially contain tens of thousands of
-recipients. Header metadata in MLS messages typically consists of an opaque
-<code>group_id</code>, a numerical value to determine the epoch of the group (the number
-of changes that have been made to the group), and whether the message is an
-application message, a proposal, or a commit.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+dispatching messages because that list could potentially contain tens of
+thousands of recipients. Header metadata in MLS messages typically consists of
+an opaque <code>group_id</code>, a numerical value to determine the epoch of the group (the
+number of changes that have been made to the group), and whether the message is
+an application message, a proposal, or a commit.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 <p id="section-8.1-4">Even though some of this metadata information does not consist of sensitive
 information, in correlation with other data a network observer might be able to
 reconstruct sensitive information. Using a secure channel to transfer this
@@ -2788,8 +2776,8 @@ metadata if it cannot compromise the secure channel.<a href="#section-8.1-4" cla
           <h4 id="name-integrity-and-authenticatio">
 <a href="#section-8.1.1" class="section-number selfRef">8.1.1. </a><a href="#name-integrity-and-authenticatio" class="section-name selfRef">Integrity and Authentication of Custom Metadata</a>
           </h4>
-<p id="section-8.1.1-1">MLS provides an authenticated "Additional Authenticated Data" (AAD) field
-for applications to make data available outside a PrivateMessage, while
+<p id="section-8.1.1-1">MLS provides an authenticated "Additional Authenticated Data" (AAD) field for
+applications to make data available outside a PrivateMessage, while
 cryptographically binding it to the message.<a href="#section-8.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.1.1-2.1">
@@ -2834,8 +2822,8 @@ arbitrary numbers of group operation messages to the Delivery Service or the MLS
 clients.<a href="#section-8.1.3-2" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.1.3-3.1">
-              <p id="section-8.1.3-3.1.1"><strong>RECOMMENDATION:</strong> Use credentials uncorrellated with specific users to help prevent DoS
-attacks, in a privacy preserving manner. Note that the privacy of
+              <p id="section-8.1.3-3.1.1"><strong>RECOMMENDATION:</strong> Use credentials uncorrellated with specific users to help
+prevent DoS attacks, in a privacy preserving manner. Note that the privacy of
 these mechanisms has to be adjusted in accordance with the privacy expected
 from secure transport links. (See more discussion in the next section.)<a href="#section-8.1.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -2849,9 +2837,9 @@ from secure transport links. (See more discussion in the next section.)<a href="
           </h4>
 <p id="section-8.1.4-1">As noted above, MLS is designed to provide some robustness in the face of
 tampering within the secure transport, i.e., tampering by the Delivery Service.
-The confidentiality and authenticity properties of MLS prevent the DS from reading or
-writing messages.  MLS also provides a few tools for detecting message
-suppression, with the caveat that message suppression cannot always be
+The confidentiality and authenticity properties of MLS prevent the DS from
+reading or writing messages.  MLS also provides a few tools for detecting
+message suppression, with the caveat that message suppression cannot always be
 distinguished from transport failure.<a href="#section-8.1.4-1" class="pilcrow">¶</a></p>
 <p id="section-8.1.4-2">Each encrypted MLS message carries a "generation" number which is a per-sender
 incrementing counter.  If a group member observes a gap in the generation
@@ -3049,27 +3037,25 @@ compromise)<a href="#section-8.3-3.6.1" class="pilcrow">¶</a></p>
 <a href="#section-8.3.1" class="section-number selfRef">8.3.1. </a><a href="#name-compromise-of-symmetric-key" class="section-name selfRef">Compromise of Symmetric Keying Material</a>
           </h4>
 <p id="section-8.3.1-1">As described above, each MLS epoch creates a new Group Secret.<a href="#section-8.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.1-2">These group secrets are then used to create a per-sender Ratchet
-Secret, which in turn is used to create a per-sender with additional
-data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span> key that is then used to encrypt MLS
-Plaintext messages.  Each time a message is sent, the Ratchet Secret
-is used to create a new Ratchet Secret and a new corresponding AEAD
-key.  Because of the properties of the key derivation function, it is
-not possible to compute a Ratchet Secret from its corresponding AEAD
-key or compute Ratchet Secret n-1 from Ratchet Secret n.<a href="#section-8.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.1-3">Below, we consider the compromise of each of these pieces of keying
-material in turn, in ascending order of severity.  While this is a
-limited kind of compromise, it can be realistic in cases of
-implementation vulnerabilities where only part of the memory leaks to
-the adversary.<a href="#section-8.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.1-2">These group secrets are then used to create a per-sender Ratchet Secret, which
+in turn is used to create a per-sender with additional data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span>
+key that is then used to encrypt MLS Plaintext messages.  Each time a message is
+sent, the Ratchet Secret is used to create a new Ratchet Secret and a new
+corresponding AEAD key.  Because of the properties of the key derivation
+function, it is not possible to compute a Ratchet Secret from its corresponding
+AEAD key or compute Ratchet Secret n-1 from Ratchet Secret n.<a href="#section-8.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1-3">Below, we consider the compromise of each of these pieces of keying material in
+turn, in ascending order of severity.  While this is a limited kind of
+compromise, it can be realistic in cases of implementation vulnerabilities where
+only part of the memory leaks to the adversary.<a href="#section-8.3.1-3" class="pilcrow">¶</a></p>
 <div id="compromise-of-aead-keys">
 <section id="section-8.3.1.1">
             <h5 id="name-compromise-of-aead-keys">
 <a href="#section-8.3.1.1" class="section-number selfRef">8.3.1.1. </a><a href="#name-compromise-of-aead-keys" class="section-name selfRef">Compromise of AEAD Keys</a>
             </h5>
 <p id="section-8.3.1.1-1">In some circumstances, adversaries may have access to specific AEAD keys and
-nonces which protect an Application or a Group Operation message. Compromise
-of these keys allows the attacker to decrypt the specific message encrypted with
+nonces which protect an Application or a Group Operation message. Compromise of
+these keys allows the attacker to decrypt the specific message encrypted with
 that key but no other; because the AEAD keys are derived from the Ratchet
 Secret, it cannot generate the next Ratchet Secret and hence not the next AEAD
 key.<a href="#section-8.3.1.1-1" class="pilcrow">¶</a></p>
@@ -3078,18 +3064,17 @@ encrypted application message will be leaked as well as the signature over that
 message. This means that the compromise has both confidentiality and privacy
 implications on the future AEAD encryptions of that chain.  In the case of a
 Group Operation message, only the privacy is affected, as the signature is
-revealed, because the secrets themselves are protected by HPKE encryption.
-Note that under that compromise scenario, authentication is not affected in
-either of these cases.  As every member of the group can compute the AEAD keys
-for all the chains (they have access to the Group Secrets) in order to send and
-receive messages, the authentication provided by the AEAD encryption layer of
-the common framing mechanism is weak. Successful decryption of an AEAD
-encrypted message only guarantees that some member of the group sent the message.<a href="#section-8.3.1.1-2" class="pilcrow">¶</a></p>
+revealed, because the secrets themselves are protected by HPKE encryption.  Note
+that under that compromise scenario, authentication is not affected in either of
+these cases.  As every member of the group can compute the AEAD keys for all the
+chains (they have access to the Group Secrets) in order to send and receive
+messages, the authentication provided by the AEAD encryption layer of the common
+framing mechanism is weak. Successful decryption of an AEAD encrypted message
+only guarantees that some member of the group sent the message.<a href="#section-8.3.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-8.3.1.1-3">Compromise of the AEAD keys allows the attacker to send an encrypted message
-using that key, but cannot send a message to a group which appears
-to be from any valid client since they cannot forge the signature. This
-applies to all the forms of symmetric key compromise described in
-<a href="#symmetric-key-compromise" class="auto internal xref">Section 8.3.1</a>.<a href="#section-8.3.1.1-3" class="pilcrow">¶</a></p>
+using that key, but cannot send a message to a group which appears to be from
+any valid client since they cannot forge the signature. This applies to all the
+forms of symmetric key compromise described in <a href="#symmetric-key-compromise" class="auto internal xref">Section 8.3.1</a>.<a href="#section-8.3.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="compromise-of-ratchet-secret-material">
@@ -3097,20 +3082,18 @@ applies to all the forms of symmetric key compromise described in
             <h5 id="name-compromise-of-ratchet-secre">
 <a href="#section-8.3.1.2" class="section-number selfRef">8.3.1.2. </a><a href="#name-compromise-of-ratchet-secre" class="section-name selfRef">Compromise of Ratchet Secret material</a>
             </h5>
-<p id="section-8.3.1.2-1">When a Ratchet Secret is compromised, the adversary can compute both the
-current AEAD keys for a given sender as well as any future keys for that
-sender in this epoch. Thus, it can decrypt current and future messages
-by the corresponding sender. However, because it does not have previous
-Ratchet Secrets, it cannot decrypt past messages as long as those secrets
-and keys have been deleted.<a href="#section-8.3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.1.2-2">Because of its Forward Secrecy guarantees, MLS will also retain
-secrecy of all other AEAD keys generated for <em>other</em> MLS clients,
-outside this dedicated chain of AEAD keys and nonces, even within the
-epoch of the compromise.  MLS provides Post-Compromise Security
-against an active adaptive attacker across epochs for AEAD encryption,
-which means that as soon as the epoch is changed, if the attacker does
-not have access to more secret material they won't be able to access
-any protected messages from future epochs.<a href="#section-8.3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-1">When a Ratchet Secret is compromised, the adversary can compute both the current
+AEAD keys for a given sender as well as any future keys for that sender in this
+epoch. Thus, it can decrypt current and future messages by the corresponding
+sender. However, because it does not have previous Ratchet Secrets, it cannot
+decrypt past messages as long as those secrets and keys have been deleted.<a href="#section-8.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-2">Because of its Forward Secrecy guarantees, MLS will also retain secrecy of all
+other AEAD keys generated for <em>other</em> MLS clients, outside this dedicated chain
+of AEAD keys and nonces, even within the epoch of the compromise.  MLS provides
+Post-Compromise Security against an active adaptive attacker across epochs for
+AEAD encryption, which means that as soon as the epoch is changed, if the
+attacker does not have access to more secret material they won't be able to
+access any protected messages from future epochs.<a href="#section-8.3.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="compromise-of-the-group-secrets-of-a-single-group-for-one-or-more-group-epochs">
@@ -3118,27 +3101,24 @@ any protected messages from future epochs.<a href="#section-8.3.1.2-2" class="pi
             <h5 id="name-compromise-of-the-group-sec">
 <a href="#section-8.3.1.3" class="section-number selfRef">8.3.1.3. </a><a href="#name-compromise-of-the-group-sec" class="section-name selfRef">Compromise of the Group Secrets of a single group for one or more group epochs</a>
             </h5>
-<p id="section-8.3.1.3-1">An adversary who gains access to a set of Group secrets--as when a member
-of the group is compromised--is significantly more powerful. In this
-section, we consider the case where the signature keys are not
-compromised, which can occur if the attacker has access to part of the
-memory containing the group secrets but not to the signature keys
-which might be stored in a secure enclave.<a href="#section-8.3.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.1.3-2">In this scenario, the adversary gains the ability to compute any
-number of Ratchet Secrets for the epoch and their corresponding AEAD
-encryption keys and thus can encrypt and decrypt all messages for the
-compromised epochs.<a href="#section-8.3.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-1">An adversary who gains access to a set of Group secrets--as when a member of the
+group is compromised--is significantly more powerful. In this section, we
+consider the case where the signature keys are not compromised, which can occur
+if the attacker has access to part of the memory containing the group secrets
+but not to the signature keys which might be stored in a secure enclave.<a href="#section-8.3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-2">In this scenario, the adversary gains the ability to compute any number of
+Ratchet Secrets for the epoch and their corresponding AEAD encryption keys and
+thus can encrypt and decrypt all messages for the compromised epochs.<a href="#section-8.3.1.3-2" class="pilcrow">¶</a></p>
 <p id="section-8.3.1.3-3">If the adversary is passive, it is expected from the PCS properties of the MLS
 protocol that, as soon as the compromised party remediates the compromise and
 sends an honest Commit message, the next epochs will provide message secrecy.<a href="#section-8.3.1.3-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.1.3-4">If the adversary is active, the adversary can engage in the protocol
-itself and perform updates on behalf of the compromised party with no
-ability for an honest group to recover message secrecy. However, MLS
-provides PCS against active adaptive attackers through its Remove
-group operation. This means that, as long as other members of the
-group are honest, the protocol will guarantee message secrecy for all
-messages exchanged in the epochs after the compromised party has been
-removed.<a href="#section-8.3.1.3-4" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-4">If the adversary is active, the adversary can engage in the protocol itself and
+perform updates on behalf of the compromised party with no ability for an honest
+group to recover message secrecy. However, MLS provides PCS against active
+adaptive attackers through its Remove group operation. This means that, as long
+as other members of the group are honest, the protocol will guarantee message
+secrecy for all messages exchanged in the epochs after the compromised party has
+been removed.<a href="#section-8.3.1.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3148,13 +3128,13 @@ removed.<a href="#section-8.3.1.3-4" class="pilcrow">¶</a></p>
           <h4 id="name-compromise-by-an-active-adv">
 <a href="#section-8.3.2" class="section-number selfRef">8.3.2. </a><a href="#name-compromise-by-an-active-adv" class="section-name selfRef">Compromise by an active adversary with the ability to sign messages</a>
           </h4>
-<p id="section-8.3.2-1">If an active adversary has compromised an MLS client and can sign
-messages, two different settings emerge. In the strongest compromise scenario, the
-attacker has access to the signing key and can forge authenticated messages. In
-a weaker, yet realistic scenario, the attacker has compromised a client but the
-client signature keys are protected with dedicated hardware features which do
-not allow direct access to the value of the private key and instead provide a
-signature API.<a href="#section-8.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-1">If an active adversary has compromised an MLS client and can sign messages, two
+different settings emerge. In the strongest compromise scenario, the attacker
+has access to the signing key and can forge authenticated messages. In a weaker,
+yet realistic scenario, the attacker has compromised a client but the client
+signature keys are protected with dedicated hardware features which do not allow
+direct access to the value of the private key and instead provide a signature
+API.<a href="#section-8.3.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.3.2-2">When considering an active adaptive attacker with access to a signature oracle,
 the compromise scenario implies a significant impact on both the secrecy and
 authentication guarantees of the protocol, especially if the attacker also has
@@ -3183,18 +3163,16 @@ compromise, the attacker can perform every operation available to a legitimate
 client in both cases.<a href="#section-8.3.3-1" class="pilcrow">¶</a></p>
 <p id="section-8.3.3-2">There is a significant difference, however in terms of recovery after a
 compromise.<a href="#section-8.3.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-3">Because of the PCS guarantees provided by the MLS protocol, when a
-previously compromised client recovers from compromise and performs an
-honest Commit, both secrecy and authentication of future messages can
-be recovered as long as the attacker doesn't otherwise get access to
-the key. Because the adversary doesn't have the signing key, they
-cannot authenticate messages on behalf of the compromised party, even
-if they still have control over some group keys by colluding with
-other members of the group.<a href="#section-8.3.3-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-3">Because of the PCS guarantees provided by the MLS protocol, when a previously
+compromised client recovers from compromise and performs an honest Commit, both
+secrecy and authentication of future messages can be recovered as long as the
+attacker doesn't otherwise get access to the key. Because the adversary doesn't
+have the signing key, they cannot authenticate messages on behalf of the
+compromised party, even if they still have control over some group keys by
+colluding with other members of the group.<a href="#section-8.3.3-3" class="pilcrow">¶</a></p>
 <p id="section-8.3.3-4">This is in contrast with the case where the signature key is leaked. In that
 case the compromised endpoint needs to refresh its credentials and invalidate
-the old credentials before the attacker will be unable to authenticate
-messages.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
+the old credentials before the attacker will be unable to authenticate messages.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
 <p id="section-8.3.3-5">Beware that in both oracle and private key access, an active adaptive attacker
 can follow the protocol and request to update its own credential. This in turn
 induces a signature key rotation which could provide the attacker with part or
@@ -3210,8 +3188,8 @@ compromise.<a href="#section-8.3.3-6.1.1" class="pilcrow">¶</a></p>
           </ul>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.3.3-7.1">
-              <p id="section-8.3.3-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation,
-the users of a group should check for revoked keys.<a href="#section-8.3.3-7.1.1" class="pilcrow">¶</a></p>
+              <p id="section-8.3.3-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation, the users of
+a group should check for revoked keys.<a href="#section-8.3.3-7.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3239,15 +3217,15 @@ securely using dedicated mechanisms on the device.<a href="#section-8.3.4-3.1.1"
 <li class="normal ulEmpty" id="section-8.3.4-4.1">
               <p id="section-8.3.4-4.1.1"><strong>RECOMMENDATION:</strong> If the threat model of the system is against an adversary
 which can access the messages on the device without even needing to attack
-MLS, the application should delete plaintext and ciphertext messages
-as soon as practical after encryption or decryption.<a href="#section-8.3.4-4.1.1" class="pilcrow">¶</a></p>
+MLS, the application should delete plaintext and ciphertext messages as soon
+as practical after encryption or decryption.<a href="#section-8.3.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-8.3.4-5">Note that this document makes a clear distinction between the way signature keys
 and other group shared secrets must be handled.  In particular, a large set of
 group secrets cannot necessarily be assumed to be protected by an HSM or secure
-enclave features. This is especially true because these keys are
-frequently used and changed with each message received by a client.<a href="#section-8.3.4-5" class="pilcrow">¶</a></p>
+enclave features. This is especially true because these keys are frequently used
+and changed with each message received by a client.<a href="#section-8.3.4-5" class="pilcrow">¶</a></p>
 <p id="section-8.3.4-6">However, the signature private keys are mostly used by clients to send a
 message. They also provide strong authentication guarantees to other clients,
 hence we consider that their protection by additional security mechanisms should
@@ -3391,12 +3369,11 @@ delay notifications randomly across recipient devices using a mixnet or other
 techniques.<a href="#section-8.4.2.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.2.1-6">Note that with a legal request to ask the service provider for
-the push-token associated with an identifier, it is easy to correlate the token
-with a second request to the
-company operating the push-notification system to get information about the
-device, which is often linked with a real identity via a cloud account, a credit
-card or other information.<a href="#section-8.4.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-8.4.2.1-6">Note that with a legal request to ask the service provider for the push-token
+associated with an identifier, it is easy to correlate the token with a second
+request to the company operating the push-notification system to get information
+about the device, which is often linked with a real identity via a cloud
+account, a credit card or other information.<a href="#section-8.4.2.1-6" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.2.1-7.1">
                 <p id="section-8.4.2.1-7.1.1"><strong>RECOMMENDATION:</strong> If stronger privacy guarantees are needed with regard to
@@ -3443,52 +3420,48 @@ signature private key.<a href="#section-8.4.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-8.4.3-5">Note that historically some systems generate signature keys on the
-Authentication Service and distribute the private keys to clients
-along with their credential. This is a dangerous practice because it
-allows the AS or an attacker who has compromised the AS to silently
-impersonate the client.<a href="#section-8.4.3-5" class="pilcrow">¶</a></p>
+Authentication Service and distribute the private keys to clients along with
+their credential. This is a dangerous practice because it allows the AS or an
+attacker who has compromised the AS to silently impersonate the client.<a href="#section-8.4.3-5" class="pilcrow">¶</a></p>
 <div id="authentication-compromise-ghost-users-and-impersonations">
 <section id="section-8.4.3.1">
             <h5 id="name-authentication-compromise-g">
 <a href="#section-8.4.3.1" class="section-number selfRef">8.4.3.1. </a><a href="#name-authentication-compromise-g" class="section-name selfRef">Authentication compromise: Ghost users and impersonations</a>
             </h5>
-<p id="section-8.4.3.1-1">One important property of MLS is that all Members know which other members are in
-the group at all times. If all Members of the group and the Authentication
+<p id="section-8.4.3.1-1">One important property of MLS is that all Members know which other members are
+in the group at all times. If all Members of the group and the Authentication
 Service are honest, no parties other than the members of the current group can
 read and write messages protected by the protocol for that Group.<a href="#section-8.4.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.4.3.1-2">This guarantee applies to the the cryptographic identities of the members.
 Details about how to verify the identity of a client depend on the MLS
 Credential type used. For example, cryptographic verification of credentials can
-be largely performed autonomously (e.g., without user interaction) by
-the clients themselves for the <code>x509</code> Credential
-type.<a href="#section-8.4.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-3">In contrast, when MLS clients use the <code>basic</code> Credential type, then some
-other mechanism must be used to verify identities. For instance the Authentication
-Service could operate some sort of directory server to provide keys,
-or users could verify keys via an out-of-band mechanism.<a href="#section-8.4.3.1-3" class="pilcrow">¶</a></p>
+be largely performed autonomously (e.g., without user interaction) by the
+clients themselves for the <code>x509</code> Credential type.<a href="#section-8.4.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-3">In contrast, when MLS clients use the <code>basic</code> Credential type, then some other
+mechanism must be used to verify identities. For instance the Authentication
+Service could operate some sort of directory server to provide keys, or users
+could verify keys via an out-of-band mechanism.<a href="#section-8.4.3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.1-4.1">
-                <p id="section-8.4.3.1-4.1.1"><strong>RECOMMENDATION:</strong> Select the MLS Credential type with the strongest security which is
-supported by all target members of an MLS group.<a href="#section-8.4.3.1-4.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.3.1-4.1.1"><strong>RECOMMENDATION:</strong> Select the MLS Credential type with the strongest security
+which is supported by all target members of an MLS group.<a href="#section-8.4.3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-5">If the AS is compromised, it could validate a (or generate a new)
-signature keypair for an attacker. The attacker could then use this
-keypair to join a group as if it were another of the user's clients.
-Because a user can have many MLS
-clients running the MLS protocol, it possibly has many signature
-keypairs for multiple devices. These attacks could be very difficult
-to detect, especially in large groups where the UI might not reflect
-all the changes back to the users. If the application participates in
-a key transparency mechanism in which it is possible to determine
-every key for a given user, then this then this would allow for the
-detection of surreptitiously created false credentials.<a href="#section-8.4.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-5">If the AS is compromised, it could validate a (or generate a new) signature
+keypair for an attacker. The attacker could then use this keypair to join a
+group as if it were another of the user's clients.  Because a user can have many
+MLS clients running the MLS protocol, it possibly has many signature keypairs
+for multiple devices. These attacks could be very difficult to detect,
+especially in large groups where the UI might not reflect all the changes back
+to the users. If the application participates in a key transparency mechanism in
+which it is possible to determine every key for a given user, then this then
+this would allow for the detection of surreptitiously created false credentials.<a href="#section-8.4.3.1-5" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.1-6.1">
                 <p id="section-8.4.3.1-6.1.1"><strong>RECOMMENDATION:</strong> Make sure that MLS clients reflect all the membership
 changes to the users as they happen. If a choice has to be made because the
-number of notifications is too high, the client should provide a log of
-state of the device so that the user can examine it.<a href="#section-8.4.3.1-6.1.1" class="pilcrow">¶</a></p>
+number of notifications is too high, the client should provide a log of state
+of the device so that the user can examine it.<a href="#section-8.4.3.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <ul class="normal ulEmpty">
@@ -3507,8 +3480,8 @@ to prove their identity to each other. This can be done for instance using a QR
 code that can be scanned by the other parties.<a href="#section-8.4.3.1-8" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.1-9.1">
-                <p id="section-8.4.3.1-9.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication
-mechanisms to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-9.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.3.1-9.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication mechanisms
+to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-9.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-8.4.3.1-10">We note, again, that as described prior to that section, the Authentication
@@ -3549,8 +3522,8 @@ or regulation can associate unencrypted group messages (e.g., Commits and
 Proposals) with the corresponding user identity.<a href="#section-8.4.3.2-4" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.2-5.1">
-                <p id="section-8.4.3.2-5.1.1"><strong>RECOMMENDATION:</strong> Use encrypted group operation messages to limit
-privacy risks whenever possible.<a href="#section-8.4.3.2-5.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.3.2-5.1.1"><strong>RECOMMENDATION:</strong> Use encrypted group operation messages to limit privacy
+risks whenever possible.<a href="#section-8.4.3.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-8.4.3.2-6">In certain cases, the adversary can access specific bindings between public keys
@@ -3611,8 +3584,8 @@ analyzed by <span>[<a href="#BBN19" class="cite xref">BBN19</a>]</span> (draft 7
 <p id="section-8.6-2">Individual components of various drafts of the MLS protocol have been analyzed
 in isolation and with differing adversarial models, for example, <span>[<a href="#BBR18" class="cite xref">BBR18</a>]</span>,
 <span>[<a href="#ACDT19" class="cite xref">ACDT19</a>]</span>, <span>[<a href="#ACCKKMPPWY19" class="cite xref">ACCKKMPPWY19</a>]</span>, <span>[<a href="#AJM20" class="cite xref">AJM20</a>]</span>, <span>[<a href="#ACJM20" class="cite xref">ACJM20</a>]</span>, and <span>[<a href="#AHKM21" class="cite xref">AHKM21</a>]</span> analyze the
-ratcheting tree sub-protocol of MLS that facilitates key agreement,
-<span>[<a href="#WPBB22" class="cite xref">WPBB22</a>]</span> analyzes the sub-protocol of MLS for group state agreement and authentication,
+ratcheting tree sub-protocol of MLS that facilitates key agreement, <span>[<a href="#WPBB22" class="cite xref">WPBB22</a>]</span>
+analyzes the sub-protocol of MLS for group state agreement and authentication,
 while <span>[<a href="#BCK21" class="cite xref">BCK21</a>]</span> analyzes the key derivation paths in the ratchet tree and key
 schedule. Finally, <span>[<a href="#CHK21" class="cite xref">CHK21</a>]</span> analyzes the authentication and cross-group healing
 guarantees provided by MLS.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
