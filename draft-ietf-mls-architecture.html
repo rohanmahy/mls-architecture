@@ -3488,7 +3488,14 @@ could verify keys via an out-of-band mechanism.<a href="#section-8.4.3.1-3" clas
 which is supported by all target members of an MLS group.<a href="#section-8.4.3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-5">If the AS is compromised, it could validate a (or generate a new) signature
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.3.1-5.1">
+                <p id="section-8.4.3.1-5.1.1"><strong>RECOMMENDATION:</strong> Do not use the same signature keypair across
+groups. Update all keys for all groups on a regular basis. Do not preserve
+keys in different groups when suspecting a compromise.<a href="#section-8.4.3.1-5.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-8.4.3.1-6">If the AS is compromised, it could validate a (or generate a new) signature
 keypair for an attacker. The attacker could then use this keypair to join a
 group as if it were another of the user's clients.  Because a user can have many
 MLS clients running the MLS protocol, it possibly has many signature keypairs
@@ -3496,41 +3503,41 @@ for multiple devices. These attacks could be very difficult to detect,
 especially in large groups where the UI might not reflect all the changes back
 to the users. If the application participates in a key transparency mechanism in
 which it is possible to determine every key for a given user, then this then
-this would allow for the detection of surreptitiously created false credentials.<a href="#section-8.4.3.1-5" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-6.1">
-                <p id="section-8.4.3.1-6.1.1"><strong>RECOMMENDATION:</strong> Make sure that MLS clients reflect all the membership
-changes to the users as they happen. If a choice has to be made because the
-number of notifications is too high, the client should provide a log of state
-of the device so that the user can examine it.<a href="#section-8.4.3.1-6.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
+this would allow for the detection of surreptitiously created false credentials.<a href="#section-8.4.3.1-6" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.1-7.1">
-                <p id="section-8.4.3.1-7.1.1"><strong>RECOMMENDATION:</strong> Provide a key transparency mechanism for the
-Authentication Services to allow public verification of the credentials
-authenticated by this service.<a href="#section-8.4.3.1-7.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.3.1-7.1.1"><strong>RECOMMENDATION:</strong> Make sure that MLS clients reflect all the membership
+changes to the users as they happen. If a choice has to be made because the
+number of notifications is too high, the client should provide a log of state
+of the device so that the user can examine it.<a href="#section-8.4.3.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-8">While the ways to handle MLS credentials are not defined by the protocol or the
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.3.1-8.1">
+                <p id="section-8.4.3.1-8.1.1"><strong>RECOMMENDATION:</strong> Provide a key transparency mechanism for the
+Authentication Services to allow public verification of the credentials
+authenticated by this service.<a href="#section-8.4.3.1-8.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-8.4.3.1-9">While the ways to handle MLS credentials are not defined by the protocol or the
 architecture documents, the MLS protocol has been designed with a mechanism that
 can be used to provide out-of-band authentication to users. The
 "authentication_secret" generated for each user at each epoch of the group is a
 one-time, per client, authentication secret which can be exchanged between users
 to prove their identity to each other. This can be done for instance using a QR
-code that can be scanned by the other parties.<a href="#section-8.4.3.1-8" class="pilcrow">¶</a></p>
+code that can be scanned by the other parties.<a href="#section-8.4.3.1-9" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-9.1">
-                <p id="section-8.4.3.1-9.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication mechanisms
-to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-9.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.4.3.1-10.1">
+                <p id="section-8.4.3.1-10.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication mechanisms
+to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-10.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-10">We note, again, that as described prior to that section, the Authentication
+<p id="section-8.4.3.1-11">We note, again, that as described prior to that section, the Authentication
 Service may not be a centralized system, and could be realized by many
 mechanisms such as establishing prior one-to-one deniable channels, gossiping,
-or using trust on first use (TOFU) for credentials used by the MLS Protocol.<a href="#section-8.4.3.1-10" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-11">Another important consideration is the ease of redistributing new keys on client
-compromise, which helps recovering security faster in various cases.<a href="#section-8.4.3.1-11" class="pilcrow">¶</a></p>
+or using trust on first use (TOFU) for credentials used by the MLS Protocol.<a href="#section-8.4.3.1-11" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-12">Another important consideration is the ease of redistributing new keys on client
+compromise, which helps recovering security faster in various cases.<a href="#section-8.4.3.1-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-of-the-group-membership">
@@ -3564,16 +3571,9 @@ and identities. If the signature keys are reused across groups, the adversary
 can get more information about the targeted user.<a href="#section-8.4.3.2-5" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.2-6.1">
-                <p id="section-8.4.3.2-6.1.1"><strong>RECOMMENDATION:</strong> Do not use the same signature keypair across
-groups. Update all keys for all groups on a regular basis. Do not preserve
-keys in different groups when suspecting a compromise.<a href="#section-8.4.3.2-6.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.2-7.1">
-                <p id="section-8.4.3.2-7.1.1"><strong>RECOMMENDATION:</strong> Separate the service binding the identities and the public
+                <p id="section-8.4.3.2-6.1.1"><strong>RECOMMENDATION:</strong> Separate the binding the identities and the public
 keys from the service which generates or validates the credentials or
-cryptographic material of the Clients.<a href="#section-8.4.3.2-7.1.1" class="pilcrow">¶</a></p>
+cryptographic material of the Clients.<a href="#section-8.4.3.2-6.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </section>

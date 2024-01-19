@@ -1918,6 +1918,11 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
       strongest security which is supported by all target members of an
       MLS group.
 
+      *RECOMMENDATION:* Do not use the same signature keypair across
+      groups.  Update all keys for all groups on a regular basis.  Do
+      not preserve keys in different groups when suspecting a
+      compromise.
+
    If the AS is compromised, it could validate a (or generate a new)
    signature keypair for an attacker.  The attacker could then use this
    keypair to join a group as if it were another of the user's clients.
@@ -1994,13 +1999,8 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    groups, the adversary can get more information about the targeted
    user.
 
-      *RECOMMENDATION:* Do not use the same signature keypair across
-      groups.  Update all keys for all groups on a regular basis.  Do
-      not preserve keys in different groups when suspecting a
-      compromise.
-
-      *RECOMMENDATION:* Separate the service binding the identities and
-      the public keys from the service which generates or validates the
+      *RECOMMENDATION:* Separate the binding the identities and the
+      public keys from the service which generates or validates the
       credentials or cryptographic material of the Clients.
 
 8.5.  Considerations for attacks outside of the threat model
