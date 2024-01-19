@@ -5,14 +5,14 @@
 Network Working Group                                      B. Beurdouche
 Internet-Draft                                           Inria & Mozilla
 Intended status: Informational                               E. Rescorla
-Expires: 10 May 2024                                             Mozilla
+Expires: 22 July 2024                                            Mozilla
                                                                 E. Omara
                                                                   Google
                                                                S. Inguva
                                                                         
                                                                 A. Duric
                                                                     Wire
-                                                         7 November 2023
+                                                         19 January 2024
 
 
             The Messaging Layer Security (MLS) Architecture
@@ -68,11 +68,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 May 2024.
+   This Internet-Draft will expire on 22 July 2024.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2024 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -771,13 +771,15 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    inside the group.  When members perform changes directly, this is
    clearly the case.  External joins are authorized indirectly, in the
    sense that a member publishing a GroupInfo object authorizes anyone
-   to join who has access to the GroupInfo object.  Both types of joins
-   are done via a Commit message, which could be blocked by the DS or
-   rejected by clients if the join is not authorized.  The former
-   approach requires that Commits be visible to the DS; the latter
-   approach requires that clients all share a consistent policy.  In the
-   unfortunate event that an unauthorized member is able to join, MLS
-   enables any member to remove them.
+   to join who has access to the GroupInfo object, subject to whatever
+   access control policies the application applies for external joins.
+
+   Both types of joins are done via a Commit message, which could be
+   blocked by the DS or rejected by clients if the join is not
+   authorized.  The former approach requires that Commits be visible to
+   the DS; the latter approach requires that clients all share a
+   consistent policy.  In the unfortunate event that an unauthorized
+   member is able to join, MLS enables any member to remove them.
 
    Application setup may also determine other criteria for membership
    validity.  For example, per-device signature keys can be signed by an

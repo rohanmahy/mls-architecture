@@ -30,24 +30,24 @@ guarantees that are achieved by a messaging application. This is especially true
 in the case of active adversaries that are able to compromise clients, the delivery
 service, or the authentication service. 
     " name="description">
-<meta content="xml2rfc 3.18.2" name="generator">
+<meta content="xml2rfc 3.19.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-mls-architecture-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.2
+  xml2rfc 3.19.1
     Python 3.11.6
-    ConfigArgParse 1.5.3
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.11.0
+    platformdirs 4.1.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.9
+    wcwidth 0.2.13
 -->
 <link href="draft-ietf-mls-architecture.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1046,11 +1046,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">MLS Architecture</td>
-<td class="right">November 2023</td>
+<td class="right">January 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Beurdouche, et al.</td>
-<td class="center">Expires 10 May 2024</td>
+<td class="center">Expires 22 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1063,12 +1063,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-mls-architecture-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-07" class="published">7 November 2023</time>
+<time datetime="2024-01-19" class="published">19 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-10">10 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-22">22 July 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1145,7 +1145,7 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1154,7 +1154,7 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -2221,18 +2221,20 @@ they must be removed by a remaining member.)<a href="#section-6.1-4" class="pilc
 group.  When members perform changes directly, this is clearly the case.
 External joins are authorized indirectly, in the sense that a member publishing
 a GroupInfo object authorizes anyone to join who has access to the GroupInfo
-object. Both types of joins are done via a Commit message, which could be
+object, subject to whatever access control policies the application applies
+for external joins.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-6">Both types of joins are done via a Commit message, which could be
 blocked by the DS or rejected by clients if the join is not authorized.  The
 former approach requires that Commits be visible to the DS; the latter approach
 requires that clients all share a consistent policy. In the unfortunate event
 that an unauthorized member is able to join, MLS enables any member to remove
-them.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
-<p id="section-6.1-6">Application setup may also determine other criteria for membership validity. For
+them.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1-7">Application setup may also determine other criteria for membership validity. For
 example, per-device signature keys can be signed by an identity key recognized
 by other participants. If a certificate chain is used to authenticate device
 signature keys, then revocation by the owner adds an alternative mechanism to prompt
-membership removal.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
-<p id="section-6.1-7">An MLS group's secrets change on every change of membership, so each client only
+membership removal.<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+<p id="section-6.1-8">An MLS group's secrets change on every change of membership, so each client only
 has access to the secrets used by the group while they are a member.  Messages
 sent before a client joins or after they are removed are protected with keys
 that are not accessible to the client.  Compromise of a member removed from a
@@ -2240,7 +2242,7 @@ group does not affect the security of messages sent after their removal.
 Messages sent during the client's membership are also secure as long as the
 client has properly implemented the MLS deletion schedule, which calls for the
 secrets used to encrypt or decrypt a message to be deleted after use, along with
-any secrets that could be used to derive them.<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+any secrets that could be used to derive them.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="parallel-groups">
