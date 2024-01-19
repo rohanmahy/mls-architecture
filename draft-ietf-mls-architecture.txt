@@ -1351,10 +1351,6 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    measures can be taken to ensure the appropriate level of redundancy
    and quality of service for MLS.
 
-      *RECOMMENDATION:* If unidirectional transport is used for the
-      secure transport channel, prefer using a transport protocol which
-      provides Forward Error Correction.
-
 8.2.  Intended Security Guarantees
 
    MLS aims to provide a number of security guarantees, covering
