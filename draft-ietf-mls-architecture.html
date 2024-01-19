@@ -3317,6 +3317,36 @@ protection.<a href="#section-8.4.1.1-5.1.1" class="pilcrow">¶</a></p>
 not be enough to provide strong privacy or anonymity properties.<a href="#section-8.4.1.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="storage-of-metadata-and-ecryption-at-rest-on-the-servers">
+<section id="section-8.4.1.2">
+            <h5 id="name-storage-of-metadata-and-ecr">
+<a href="#section-8.4.1.2" class="section-number selfRef">8.4.1.2. </a><a href="#name-storage-of-metadata-and-ecr" class="section-name selfRef">Storage of Metadata and Ecryption at rest on the Servers</a>
+            </h5>
+<p id="section-8.4.1.2-1">In the case where private data or metadata has to be persisted on the servers
+for functionality (mappings between identities and push tokens, group
+metadata...), it should be stored encrypted at rest and only decrypted upon need
+during the execution. Honest Service Providers can rely on such encryption at
+rest mechanism to be able to prevent access to the data when not using it.<a href="#section-8.4.1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.1.2-2.1">
+                <p id="section-8.4.1.2-2.1.1"><strong>RECOMMENDATION:</strong> Store cryptographic material used for server-side
+decryption of sensitive meta-data on the clients and only send it when needed.
+The server can use the secret to open and update encrypted data containers
+after which they can delete these keys until the next time they need it, in
+which case those can be provided by the client.<a href="#section-8.4.1.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.1.2-3.1">
+                <p id="section-8.4.1.2-3.1.1"><strong>RECOMMENDATION:</strong> Rely on group secrets exported from the MLS session for
+server-side encryption at rest and update the key after each removal from the
+group. Rotate those keys on a regular basis otherwise.<a href="#section-8.4.1.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-8.4.1.2-4">In the future, it is expected that servers can rely on fully homomorphic
+encryption to rotate the ciphertexts without opening these encrypted containers.<a href="#section-8.4.1.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="delivery-service-compromise">
@@ -3395,6 +3425,8 @@ to the Delivery Service without the need of a dedicated push notification
 infrastructure.<a href="#section-8.4.2.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
+<p id="section-8.4.2.1-8">Applications can also consider anonymous systems for server fanout (for
+example <span>[<a href="#Loopix" class="cite xref">Loopix</a>]</span>).<a href="#section-8.4.2.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3521,39 +3553,31 @@ other clients. In addition, there may be applications of MLS in which the group
 membership list is stored on some server associated with the Delivery Service.<a href="#section-8.4.3.2-1" class="pilcrow">¶</a></p>
 <p id="section-8.4.3.2-2">While this knowledge is not a breach of the protocol's authentication or
 confidentiality guarantees, it is a serious issue for privacy.<a href="#section-8.4.3.2-2" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.2-3.1">
-                <p id="section-8.4.3.2-3.1.1"><strong>RECOMMENDATION:</strong> In the case where metadata has to be persisted for
-functionality, it should be stored encrypted at rest and then decrypted during
-the execution. Applications should also consider anonymous systems for server
-fanout (for example <span>[<a href="#Loopix" class="cite xref">Loopix</a>]</span>).<a href="#section-8.4.3.2-3.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-8.4.3.2-4">Some infrastructure keeps a mapping between keys used in the MLS protocol and
+<p id="section-8.4.3.2-3">Some infrastructure keep a mapping between keys used in the MLS protocol and
 user identities. An attacker with access to this information due to compromise
 or regulation can associate unencrypted group messages (e.g., Commits and
-Proposals) with the corresponding user identity.<a href="#section-8.4.3.2-4" class="pilcrow">¶</a></p>
+Proposals) with the corresponding user identity.<a href="#section-8.4.3.2-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.2-5.1">
-                <p id="section-8.4.3.2-5.1.1"><strong>RECOMMENDATION:</strong> Use encrypted group operation messages to limit privacy
-risks whenever possible.<a href="#section-8.4.3.2-5.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.4.3.2-4.1">
+                <p id="section-8.4.3.2-4.1.1"><strong>RECOMMENDATION:</strong> Use encrypted group operation messages to limit privacy
+risks whenever possible.<a href="#section-8.4.3.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.2-6">In certain cases, the adversary can access specific bindings between public keys
+<p id="section-8.4.3.2-5">In certain cases, the adversary can access specific bindings between public keys
 and identities. If the signature keys are reused across groups, the adversary
-can get more information about the targeted user.<a href="#section-8.4.3.2-6" class="pilcrow">¶</a></p>
+can get more information about the targeted user.<a href="#section-8.4.3.2-5" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.3.2-6.1">
+                <p id="section-8.4.3.2-6.1.1"><strong>RECOMMENDATION:</strong> Do not use the same signature keypair across
+groups. Update all keys for all groups on a regular basis. Do not preserve
+keys in different groups when suspecting a compromise.<a href="#section-8.4.3.2-6.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.2-7.1">
-                <p id="section-8.4.3.2-7.1.1"><strong>RECOMMENDATION:</strong> Do not use the same signature keypair across
-groups. Update all keys for all groups on a regular basis. Do not preserve
-keys in different groups when suspecting a compromise.<a href="#section-8.4.3.2-7.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.2-8.1">
-                <p id="section-8.4.3.2-8.1.1"><strong>RECOMMENDATION:</strong> Separate the service binding the identities and the public
+                <p id="section-8.4.3.2-7.1.1"><strong>RECOMMENDATION:</strong> Separate the service binding the identities and the public
 keys from the service which generates or validates the credentials or
-cryptographic material of the Clients.<a href="#section-8.4.3.2-8.1.1" class="pilcrow">¶</a></p>
+cryptographic material of the Clients.<a href="#section-8.4.3.2-7.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </section>
