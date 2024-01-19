@@ -1309,6 +1309,9 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.3">
                     <p id="section-toc.1-1.8.2.2.2.3.1"><a href="#section-8.2.3" class="auto internal xref">8.2.3</a>.  <a href="#name-non-repudiation-vs-deniabil" class="internal xref">Non-Repudiation vs Deniability</a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.4">
+                    <p id="section-toc.1-1.8.2.2.2.4.1"><a href="#section-8.2.4" class="auto internal xref">8.2.4</a>.  <a href="#name-associating-a-users-clients" class="internal xref">Associating a User's Clients</a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
@@ -2212,18 +2215,20 @@ they must be removed by a remaining member.)<a href="#section-6.1-4" class="pilc
 group.  When members perform changes directly, this is clearly the case.
 External joins are authorized indirectly, in the sense that a member publishing
 a GroupInfo object authorizes anyone to join who has access to the GroupInfo
-object. Both types of joins are done via a Commit message, which could be
+object, subject to whatever access control policies the application applies
+for external joins.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-6">Both types of joins are done via a Commit message, which could be
 blocked by the DS or rejected by clients if the join is not authorized.  The
 former approach requires that Commits be visible to the DS; the latter approach
 requires that clients all share a consistent policy. In the unfortunate event
 that an unauthorized member is able to join, MLS enables any member to remove
-them.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
-<p id="section-6.1-6">Application setup may also determine other criteria for membership validity. For
+them.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1-7">Application setup may also determine other criteria for membership validity. For
 example, per-device signature keys can be signed by an identity key recognized
 by other participants. If a certificate chain is used to authenticate device
 signature keys, then revocation by the owner adds an alternative mechanism to prompt
-membership removal.<a href="#section-6.1-6" class="pilcrow">¶</a></p>
-<p id="section-6.1-7">An MLS group's secrets change on every change of membership, so each client only
+membership removal.<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+<p id="section-6.1-8">An MLS group's secrets change on every change of membership, so each client only
 has access to the secrets used by the group while they are a member.  Messages
 sent before a client joins or after they are removed are protected with keys
 that are not accessible to the client.  Compromise of a member removed from a
@@ -2231,7 +2236,7 @@ group does not affect the security of messages sent after their removal.
 Messages sent during the client's membership are also secure as long as the
 client has properly implemented the MLS deletion schedule, which calls for the
 secrets used to encrypt or decrypt a message to be deleted after use, along with
-any secrets that could be used to derive them.<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+any secrets that could be used to derive them.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="parallel-groups">
@@ -2956,27 +2961,49 @@ the scope of this document.<a href="#section-8.2.2-9" class="pilcrow">¶</a></p>
           <h4 id="name-non-repudiation-vs-deniabil">
 <a href="#section-8.2.3" class="section-number selfRef">8.2.3. </a><a href="#name-non-repudiation-vs-deniabil" class="section-name selfRef">Non-Repudiation vs Deniability</a>
           </h4>
-<p id="section-8.2.3-1">example, all of a user's clients might present credentials authenticating the
+<p id="section-8.2.3-1">MLS provides strong authentication within a group, such that a group member
+cannot send a message that appears to be from another group member.
+Additionally, some services require that a recipient be able to prove to the
+service provider that a message was sent by a given client, in order to report
+abuse. MLS supports both of these use cases. In some deployments, these services
+are provided by mechanisms which allow the receiver to prove a message's origin
+to a third party. This is often called "non-repudiation".<a href="#section-8.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.2.3-2">Roughly speaking, "deniability" is the opposite of "non-repudiation", i.e., the
+property that it is impossible to prove to a third party that a message was sent
+by a given sender.  MLS does not make any claims with regard to deniability.  It
+may be possible to operate MLS in ways that provide certain deniability
+properties, but defining the specific requirements and resulting notions of
+deniability requires further analysis.<a href="#section-8.2.3-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="associating-a-users-clients">
+<section id="section-8.2.4">
+          <h4 id="name-associating-a-users-clients">
+<a href="#section-8.2.4" class="section-number selfRef">8.2.4. </a><a href="#name-associating-a-users-clients" class="section-name selfRef">Associating a User's Clients</a>
+          </h4>
+<p id="section-8.2.4-1">When the same user uses multiple clients, it may be possible for other members
+of a group to recognize all of those clients as belonging to the same user.  For
+example, all of a user's clients might present credentials authenticating the
 user's identity.  This association among devices might be considered a leak of
 private information.  The remainder of this section describes several approaches
-for addressing this.<a href="#section-8.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.2.3-2">This risk only arises when the leaf nodes for the clients in question provide
+for addressing this.<a href="#section-8.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.2.4-2">This risk only arises when the leaf nodes for the clients in question provide
 data that can be used to correlate the clients.  So one way to mitigate this
 risk is by only doing client-level authentication within MLS. If user-level
 authentication is still desirable, the application would have to provide it
-through some other mechanism.<a href="#section-8.2.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.2.3-3">It is also possible to maintain user-level authentication while hiding
+through some other mechanism.<a href="#section-8.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-8.2.4-3">It is also possible to maintain user-level authentication while hiding
 information about the clients that a user owns.  This can be done by having the
 clients share cryptographic state, so that they appear as a single client within
 the MLS group.  The application would need to provide a synchronization
 mechanism so that the clients' state remained consistent across changes to the
-MLS group.<a href="#section-8.2.3-3" class="pilcrow">¶</a></p>
+MLS group.<a href="#section-8.2.4-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.2.3-4.1">
-              <p id="section-8.2.3-4.1.1"><strong>RECOMMENDATION:</strong> Avoid sharing cryptographic state between clients to
+<li class="normal ulEmpty" id="section-8.2.4-4.1">
+              <p id="section-8.2.4-4.1.1"><strong>RECOMMENDATION:</strong> Avoid sharing cryptographic state between clients to
 improve resilience against compromises.  An attacker could use one compromised
 device to establish ownership of a state across other devices and reduce the
-ability of the user to recover.<a href="#section-8.2.3-4.1.1" class="pilcrow">¶</a></p>
+ability of the user to recover.<a href="#section-8.2.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3181,6 +3208,12 @@ features to allow recovery of the authentication for future messages after a
 compromise.<a href="#section-8.3.3-6.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.3.3-7.1">
+              <p id="section-8.3.3-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation,
+the users of a group should check for revoked keys.<a href="#section-8.3.3-7.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
 <div id="security-consideration-in-the-context-of-a-full-state-compromise">
@@ -3206,7 +3239,8 @@ securely using dedicated mechanisms on the device.<a href="#section-8.3.4-3.1.1"
 <li class="normal ulEmpty" id="section-8.3.4-4.1">
               <p id="section-8.3.4-4.1.1"><strong>RECOMMENDATION:</strong> If the threat model of the system is against an adversary
 which can access the messages on the device without even needing to attack
-MLS, the application should delete plaintext messages.<a href="#section-8.3.4-4.1.1" class="pilcrow">¶</a></p>
+MLS, the application should delete plaintext and ciphertext messages
+as soon as practical after encryption or decryption.<a href="#section-8.3.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-8.3.4-5">Note that this document makes a clear distinction between the way signature keys
@@ -3282,8 +3316,10 @@ the IP address and depending on the protocol the MAC address of the device.<a hr
 <p id="section-8.4.1.1-4">Similar concerns exist in the peer-to-peer use cases of MLS.<a href="#section-8.4.1.1-4" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.1.1-5.1">
-                <p id="section-8.4.1.1-5.1.1"><strong>RECOMMENDATION:</strong> In the case where privacy or anonymity is important, using
-adequate protection such as MASQUE, ToR, or a VPN can improve metadata protection.<a href="#section-8.4.1.1-5.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.1.1-5.1.1"><strong>RECOMMENDATION:</strong> In the case where privacy or anonymity is
+important, using adequate protection such as MASQUE
+<span>[<a href="#I-D.schinazi-masque-proxy" class="cite xref">I-D.schinazi-masque-proxy</a>]</span>, ToR, or a VPN can improve metadata
+protection.<a href="#section-8.4.1.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-8.4.1.1-6">More generally, using anonymous credentials in an MLS based architecture might
@@ -3395,34 +3431,22 @@ incorrect or attacker-provided identities to clients.<a href="#section-8.4.3-1" 
               <p id="section-8.4.3-2.4.1">The attacker can publish or distribute credentials<a href="#section-8.4.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-8.4.3-3">It is possible for a system to have a centralized server generate signature key
-pairs and distribute them to clients. This is strongly discouraged. In such cases, the centralized server is
-a point of compromise, since it stores signature private keys that can be used
-to impersonate clients.  A better approach is instead to generate signature key
-pairs in clients and have them "blessed" by the centralized service, e.g., by
-having the service issue a credential binding the key pair to the client's
-identity.  In this approach, there is still a risk that the centralized service
-will authorize additional key pairs, but it will not be able to use existing,
-client-generated private keys.<a href="#section-8.4.3-3" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3-4.1">
-              <p id="section-8.4.3-4.1.1"><strong>RECOMMENDATION:</strong> Make clients submit signature public keys to the AS, this
-is usually better than the AS generating public key pairs because the AS
-cannot sign on behalf of the client. This is a benefit of a Public Key
-Infrastructure in the style of the Internet PKI.<a href="#section-8.4.3-4.1.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-<p id="section-8.4.3-5">An attacker that can generate or sign new credentials may or may not have access
+<p id="section-8.4.3-3">An attacker that can generate or sign new credentials may or may not have access
 to the underlying cryptographic material necessary to perform such
 operations. In that last case, it results in windows of time for which all
-emitted credentials might be compromised.<a href="#section-8.4.3-5" class="pilcrow">¶</a></p>
+emitted credentials might be compromised.<a href="#section-8.4.3-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3-6.1">
-              <p id="section-8.4.3-6.1.1"><strong>RECOMMENDATION:</strong> Use HSMs to store the root signature keys to limit the
+<li class="normal ulEmpty" id="section-8.4.3-4.1">
+              <p id="section-8.4.3-4.1.1"><strong>RECOMMENDATION:</strong> Use HSMs to store the root signature keys to limit the
 ability of an adversary with no physical access to extract the top-level
-signature private key.<a href="#section-8.4.3-6.1.1" class="pilcrow">¶</a></p>
+signature private key.<a href="#section-8.4.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+<p id="section-8.4.3-5">Note that historically some systems generate signature keys on the
+Authentication Service and distribute the private keys to clients
+along with their credential. This is a dangerous practice because it
+allows the AS or an attacker who has compromised the AS to silently
+impersonate the client.<a href="#section-8.4.3-5" class="pilcrow">¶</a></p>
 <div id="authentication-compromise-ghost-users-and-impersonations">
 <section id="section-8.4.3.1">
             <h5 id="name-authentication-compromise-g">
@@ -3432,8 +3456,7 @@ signature private key.<a href="#section-8.4.3-6.1.1" class="pilcrow">¶</a></p>
 the group at all times. If all Members of the group and the Authentication
 Service are honest, no parties other than the members of the current group can
 read and write messages protected by the protocol for that Group.<a href="#section-8.4.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-2">This guarentee applies to the the cryptographic identities of the members,
-but these identities need to be bound to people in the physical world.
+<p id="section-8.4.3.1-2">This guarantee applies to the the cryptographic identities of the members.
 Details about how to verify the identity of a client depend on the MLS
 Credential type used. For example, cryptographic verification of credentials can
 be largely performed autonomously (e.g., without user interaction) by
@@ -3442,7 +3465,7 @@ type.<a href="#section-8.4.3.1-2" class="pilcrow">¶</a></p>
 <p id="section-8.4.3.1-3">In contrast, when MLS clients use the <code>basic</code> Credential type, then some
 other mechanism must be used to verify identities. For instance the Authentication
 Service could operate some sort of directory server to provide keys,
-or users could potentially verify keys via some out-of-band mechanism.<a href="#section-8.4.3.1-3" class="pilcrow">¶</a></p>
+or users could verify keys via an out-of-band mechanism.<a href="#section-8.4.3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.3.1-4.1">
                 <p id="section-8.4.3.1-4.1.1"><strong>RECOMMENDATION:</strong> Select the strongest MLS Credential type available among
@@ -3450,7 +3473,9 @@ the target members of an MLS group.<a href="#section-8.4.3.1-4.1.1" class="pilcr
 </li>
             </ul>
 <p id="section-8.4.3.1-5">If the AS is compromised, it could validate a (or generate a new)
-signature keypair for an attacker. Because a user can have many MLS
+signature keypair for an attacker. The attacker could then use this
+keypair to join a group as if it were another of the user's clients.
+Because a user can have many MLS
 clients running the MLS protocol, it possibly has many signature
 keypairs for multiple devices. These attacks could be very difficult
 to detect, especially in large groups where the UI might not reflect
@@ -3689,6 +3714,10 @@ guarantees provided by MLS.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
 <dt id="I-D.ietf-mls-federation">[I-D.ietf-mls-federation]</dt>
         <dd>
 <span class="refAuthor">Omara, E.</span> and <span class="refAuthor">R. Robert</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Federation"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-federation-03</span>, <time datetime="2023-09-09" class="refDate">9 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-federation-03">https://datatracker.ietf.org/doc/html/draft-ietf-mls-federation-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.schinazi-masque-proxy">[I-D.schinazi-masque-proxy]</dt>
+        <dd>
+<span class="refAuthor">Schinazi, D.</span>, <span class="refTitle">"The MASQUE Proxy"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-schinazi-masque-proxy-01</span>, <time datetime="2023-09-07" class="refDate">7 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy-01">https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="Loopix">[Loopix]</dt>
         <dd>
