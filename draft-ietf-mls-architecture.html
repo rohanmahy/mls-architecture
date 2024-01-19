@@ -1420,14 +1420,14 @@ all users, for all group sizes, including groups of only two clients.<a href="#s
 communicate securely.  For example, a set of users might use clients on their
 phones or laptops to join a group and communicate with each other. A group may
 be as small as two clients (e.g., for simple person to person messaging) or as
-large as tens of thousands.  A client that is part of a group is a <em>member</em> of that
-group. As groups change membership and group or member properties, they
-advance from one <em>epoch</em> to another and the cryptographic state of the
-group evolves.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.1-2">The group is represented as a tree, which represents the members
-as the leaves of a tree. It is used to efficiently encrypt to subsets of the
-members. Each member has a <em>LeafNode</em> object in the tree holding the client's
-identity, credentials, and capabilities.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
+large as hundreds of thousands.  A client that is part of a group is a <em>member</em>
+of that group. As groups change membership and group or member properties, they
+advance from one <em>epoch</em> to another and the cryptographic state of the group
+evolves.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-2">The group is represented as a tree, which represents the members as the leaves
+of a tree. It is used to efficiently encrypt to subsets of the members. Each
+member has a state called a <em>LeafNode</em> object holding the client's identity,
+credentials, and capabilities.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1-3">Various messages are used in the evolution from epoch to epoch.
 A <em>Proposal</em> message proposes
 a change to be made in the next epoch, such as adding or removing a member.
