@@ -1318,22 +1318,16 @@ service, or the authentication service.<a href="#section-abstract-3" class="pilc
                 <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-endpoint-compromise" class="internal xref">Endpoint Compromise</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.1">
-                    <p id="section-toc.1-1.8.2.3.2.1.1"><a href="#section-8.3.1" class="auto internal xref">8.3.1</a>.  <a href="#name-compromise-of-application-r" class="internal xref">Compromise of Application Ratchet Key material</a></p>
+                    <p id="section-toc.1-1.8.2.3.2.1.1"><a href="#section-8.3.1" class="auto internal xref">8.3.1</a>.  <a href="#name-compromise-of-symmetric-key" class="internal xref">Compromise of Symmetric Keying Material</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.2">
-                    <p id="section-toc.1-1.8.2.3.2.2.1"><a href="#section-8.3.2" class="auto internal xref">8.3.2</a>.  <a href="#name-compromise-of-ratchet-secre" class="internal xref">Compromise of Ratchet Secret material</a></p>
+                    <p id="section-toc.1-1.8.2.3.2.2.1"><a href="#section-8.3.2" class="auto internal xref">8.3.2</a>.  <a href="#name-compromise-by-an-active-adv" class="internal xref">Compromise by an active adversary with the ability to sign messages</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.3">
-                    <p id="section-toc.1-1.8.2.3.2.3.1"><a href="#section-8.3.3" class="auto internal xref">8.3.3</a>.  <a href="#name-compromise-of-the-group-sec" class="internal xref">Compromise of the Group Secrets of a single group for one or more group epochs</a></p>
+                    <p id="section-toc.1-1.8.2.3.2.3.1"><a href="#section-8.3.3" class="auto internal xref">8.3.3</a>.  <a href="#name-compromise-of-the-authentic" class="internal xref">Compromise of the authentication with access to a signature key</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.4">
-                    <p id="section-toc.1-1.8.2.3.2.4.1"><a href="#section-8.3.4" class="auto internal xref">8.3.4</a>.  <a href="#name-compromise-by-an-active-adv" class="internal xref">Compromise by an active adversary with the ability to sign messages</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.5">
-                    <p id="section-toc.1-1.8.2.3.2.5.1"><a href="#section-8.3.5" class="auto internal xref">8.3.5</a>.  <a href="#name-compromise-of-the-authentic" class="internal xref">Compromise of the authentication with access to a signature key</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.6">
-                    <p id="section-toc.1-1.8.2.3.2.6.1"><a href="#section-8.3.6" class="auto internal xref">8.3.6</a>.  <a href="#name-security-consideration-in-t" class="internal xref">Security consideration in the context of a full state compromise</a></p>
+                    <p id="section-toc.1-1.8.2.3.2.4.1"><a href="#section-8.3.4" class="auto internal xref">8.3.4</a>.  <a href="#name-security-consideration-in-t" class="internal xref">Security consideration in the context of a full state compromise</a></p>
 </li>
                 </ul>
 </li>
@@ -3049,225 +3043,233 @@ the following compromise scenarios:<a href="#section-8.3-2" class="pilcrow">¶</
 compromise)<a href="#section-8.3-3.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-8.3-4">The MLS protocol provides per-sender chains of symmetric authenticated
-encryption with additional data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span> keys that are
-generated from Group Secrets. Specifically, each epoch establishes
-a per-sender "Ratchet Secret", which is then used to generate an
-AEAD key, which is used to protect MLS Plaintext messages.
-A new Ratchet Secret is generated and is used to generate the AEAD keys for each
-message. Because of the properties of the key derivation function, it is
-not possible to compute a Ratchet Secret from its corresponding
-AEAD key or compute Ratchet Secret n-1 from Ratchet Secret n.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
-<div id="compromise-of-application-ratchet-key-material">
+<div id="symmetric-key-compromise">
 <section id="section-8.3.1">
-          <h4 id="name-compromise-of-application-r">
-<a href="#section-8.3.1" class="section-number selfRef">8.3.1. </a><a href="#name-compromise-of-application-r" class="section-name selfRef">Compromise of Application Ratchet Key material</a>
+          <h4 id="name-compromise-of-symmetric-key">
+<a href="#section-8.3.1" class="section-number selfRef">8.3.1. </a><a href="#name-compromise-of-symmetric-key" class="section-name selfRef">Compromise of Symmetric Keying Material</a>
           </h4>
-<p id="section-8.3.1-1">In some circumstances, adversaries may have access to specific AEAD keys and
-nonces which protect an Application or a Group Operation message. While this is
-a limited kind of compromise, it can be realistic in cases of implementation
-vulnerabilities where only part of the memory leaks to the adversary. As the
-application AEAD keys are derived from the application ratchet secret, compromise
-of a single application ratchet key does not imply compromise of any other AEAD
-key or nonce.<a href="#section-8.3.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="compromise-of-ratchet-secret-material">
-<section id="section-8.3.2">
-          <h4 id="name-compromise-of-ratchet-secre">
-<a href="#section-8.3.2" class="section-number selfRef">8.3.2. </a><a href="#name-compromise-of-ratchet-secre" class="section-name selfRef">Compromise of Ratchet Secret material</a>
-          </h4>
-<p id="section-8.3.2-1">When an Ratchet Secret is compromised, the adversary has access to a set of AEAD keys
-for the same chain and the same epoch, hence can decrypt messages sent using
-keys of this chain. An adversary cannot send a message to a group which appears
-to be from any valid client since they cannot forge the signature.<a href="#section-8.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-2">The MLS protocol will ensure that an adversary cannot compute any secret
-anterior for the same epoch, or for any other epochs.  Because of its Forward
-Secrecy guarantees, MLS will also retain secrecy of all other AEAD keys
-generated for <em>other</em> MLS clients, outside this dedicated chain of AEAD keys and
-nonces, even within the epoch of the compromise. However the MLS protocol does
-not provide Post Compromise Secrecy for AEAD encryption within an epoch. This
-means that if the AEAD key of a chain is compromised, the adversary can compute
-an arbitrary number of subsequent AEAD keys for that chain.<a href="#section-8.3.2-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-3">These guarantees are ensured by the structure of the MLS key schedule which
-provides Forward Secrecy for these AEAD encryptions, across the messages within
-the epoch and also across previous epochs.  Those chains are completely disjoint
-and compromising keys across the chains would mean that some Group Secrets have
-been compromised, which is not the case in this attack scenario (we explore
-stronger compromise scenarios as part of the following sections).<a href="#section-8.3.2-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-4">MLS provides Post-Compromise Security against an active adaptive attacker across
-epochs for AEAD encryption, which means that as soon as the epoch is changed, if
-the attacker does not have access to more secret material they won't be able to
-access any protected messages from future epochs.<a href="#section-8.3.2-4" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-5">In the case of an Application message, an AEAD key compromise means that the
+<p id="section-8.3.1-1">As described above, each MLS epoch creates a new Group Secret.<a href="#section-8.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1-2">These group secrets are then used to create a per-sender Ratchet
+Secret, which in turn is used to create a per-sender with additional
+data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span> key that is then used to encrypt MLS
+Plaintext messages.  Each time a message is sent, the Ratchet Secret
+is used to create a new Ratchet Secret and a new corresponding AEAD
+key.  Because of the properties of the key derivation function, it is
+not possible to compute a Ratchet Secret from its corresponding AEAD
+key or compute Ratchet Secret n-1 from Ratchet Secret n.<a href="#section-8.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1-3">Below, we consider the compromise of each of these pieces of keying
+material in turn, in ascending order of severity.  While this is a
+limited kind of compromise, it can be realistic in cases of
+implementation vulnerabilities where only part of the memory leaks to
+the adversary.<a href="#section-8.3.1-3" class="pilcrow">¶</a></p>
+<div id="compromise-of-aead-keys">
+<section id="section-8.3.1.1">
+            <h5 id="name-compromise-of-aead-keys">
+<a href="#section-8.3.1.1" class="section-number selfRef">8.3.1.1. </a><a href="#name-compromise-of-aead-keys" class="section-name selfRef">Compromise of AEAD Keys</a>
+            </h5>
+<p id="section-8.3.1.1-1">In some circumstances, adversaries may have access to specific AEAD keys and
+nonces which protect an Application or a Group Operation message. Compromise
+of these keys allows the attacker to decrypt the specific message encrypted with
+that key but no other; because the AEAD keys are derived from the Ratchet
+Secret, it cannot generate the next Ratchet Secret and hence not the next AEAD
+key.<a href="#section-8.3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.1-2">In the case of an Application message, an AEAD key compromise means that the
 encrypted application message will be leaked as well as the signature over that
 message. This means that the compromise has both confidentiality and privacy
 implications on the future AEAD encryptions of that chain.  In the case of a
 Group Operation message, only the privacy is affected, as the signature is
-revealed, because the secrets themselves are protected by HPKE encryption.<a href="#section-8.3.2-5" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-6">Note that under that compromise scenario, authentication is not affected in
+revealed, because the secrets themselves are protected by HPKE encryption.
+Note that under that compromise scenario, authentication is not affected in
 either of these cases.  As every member of the group can compute the AEAD keys
 for all the chains (they have access to the Group Secrets) in order to send and
 receive messages, the authentication provided by the AEAD encryption layer of
 the common framing mechanism is weak. Successful decryption of an AEAD
-encrypted message only guarantees that some member of the group sent the message.<a href="#section-8.3.2-6" class="pilcrow">¶</a></p>
+encrypted message only guarantees that some member of the group sent the message.<a href="#section-8.3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.1-3">Compromise of the AEAD keys allows the attacker to send an encrypted message
+using that key, but cannot send a message to a group which appears
+to be from any valid client since they cannot forge the signature. This
+applies to all the forms of symmetric key compromise described in
+<a href="#symmetric-key-compromise" class="auto internal xref">Section 8.3.1</a>.<a href="#section-8.3.1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="compromise-of-ratchet-secret-material">
+<section id="section-8.3.1.2">
+            <h5 id="name-compromise-of-ratchet-secre">
+<a href="#section-8.3.1.2" class="section-number selfRef">8.3.1.2. </a><a href="#name-compromise-of-ratchet-secre" class="section-name selfRef">Compromise of Ratchet Secret material</a>
+            </h5>
+<p id="section-8.3.1.2-1">When a Ratchet Secret is compromised, the adversary can compute both the
+current AEAD keys for a given sender as well as any future keys for that
+sender in this epoch. Thus, it can decrypt current and future messages
+by the corresponding sender. However, because it does not have previous
+Ratchet Secrets, it cannot decrypt past messages as long as those secrets
+and keys have been deleted.<a href="#section-8.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-2">Because of its Forward Secrecy guarantees, MLS will also retain
+secrecy of all other AEAD keys generated for <em>other</em> MLS clients,
+outside this dedicated chain of AEAD keys and nonces, even within the
+epoch of the compromise.  MLS provides Post-Compromise Security
+against an active adaptive attacker across epochs for AEAD encryption,
+which means that as soon as the epoch is changed, if the attacker does
+not have access to more secret material they won't be able to access
+any protected messages from future epochs.<a href="#section-8.3.1.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="compromise-of-the-group-secrets-of-a-single-group-for-one-or-more-group-epochs">
-<section id="section-8.3.3">
-          <h4 id="name-compromise-of-the-group-sec">
-<a href="#section-8.3.3" class="section-number selfRef">8.3.3. </a><a href="#name-compromise-of-the-group-sec" class="section-name selfRef">Compromise of the Group Secrets of a single group for one or more group epochs</a>
-          </h4>
-<p id="section-8.3.3-1">An adversary who gains access to a set Group secrets--as when a member
+<section id="section-8.3.1.3">
+            <h5 id="name-compromise-of-the-group-sec">
+<a href="#section-8.3.1.3" class="section-number selfRef">8.3.1.3. </a><a href="#name-compromise-of-the-group-sec" class="section-name selfRef">Compromise of the Group Secrets of a single group for one or more group epochs</a>
+            </h5>
+<p id="section-8.3.1.3-1">An adversary who gains access to a set of Group secrets--as when a member
 of the group is compromised--is significantly more powerful. In this
 section, we consider the case where the signature keys are not
 compromised, which can occur if the attacker has access to part of the
 memory containing the group secrets but not to the signature keys
-which might be stored in a secure enclave.<a href="#section-8.3.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-2">In this scenario, the adversary gains the ability to compute any
+which might be stored in a secure enclave.<a href="#section-8.3.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-2">In this scenario, the adversary gains the ability to compute any
 number of Ratchet Secrets for the epoch and their corresponding AEAD
 encryption keys and thus can encrypt and decrypt all messages for the
-compromised epochs.<a href="#section-8.3.3-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-3">If the adversary is passive, it is expected from the PCS properties of the MLS
+compromised epochs.<a href="#section-8.3.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-3">If the adversary is passive, it is expected from the PCS properties of the MLS
 protocol that, as soon as the compromised party remediates the compromise and
-sends an honest Commit message, the next epochs will provide message secrecy.<a href="#section-8.3.3-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-4">If the adversary is active, the adversary can engage in the protocol
+sends an honest Commit message, the next epochs will provide message secrecy.<a href="#section-8.3.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.3-4">If the adversary is active, the adversary can engage in the protocol
 itself and perform updates on behalf of the compromised party with no
 ability for an honest group to recover message secrecy. However, MLS
 provides PCS against active adaptive attackers through its Remove
 group operation. This means that, as long as other members of the
 group are honest, the protocol will guarantee message secrecy for all
 messages exchanged in the epochs after the compromised party has been
-removed.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
+removed.<a href="#section-8.3.1.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="compromise-by-an-active-adversary-with-the-ability-to-sign-messages">
-<section id="section-8.3.4">
+<section id="section-8.3.2">
           <h4 id="name-compromise-by-an-active-adv">
-<a href="#section-8.3.4" class="section-number selfRef">8.3.4. </a><a href="#name-compromise-by-an-active-adv" class="section-name selfRef">Compromise by an active adversary with the ability to sign messages</a>
+<a href="#section-8.3.2" class="section-number selfRef">8.3.2. </a><a href="#name-compromise-by-an-active-adv" class="section-name selfRef">Compromise by an active adversary with the ability to sign messages</a>
           </h4>
-<p id="section-8.3.4-1">If an active adversary has compromised an MLS client and can sign
+<p id="section-8.3.2-1">If an active adversary has compromised an MLS client and can sign
 messages, two different settings emerge. In the strongest compromise scenario, the
 attacker has access to the signing key and can forge authenticated messages. In
 a weaker, yet realistic scenario, the attacker has compromised a client but the
 client signature keys are protected with dedicated hardware features which do
 not allow direct access to the value of the private key and instead provide a
-signature API.<a href="#section-8.3.4-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.4-2">When considering an active adaptive attacker with access to a signature oracle,
+signature API.<a href="#section-8.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-2">When considering an active adaptive attacker with access to a signature oracle,
 the compromise scenario implies a significant impact on both the secrecy and
 authentication guarantees of the protocol, especially if the attacker also has
 access to the group secrets. In that case both secrecy and authentication are
 broken.  The attacker can generate any message, for the current and future
 epochs, until the compromise is remediated and the formerly compromised client
-sends an honest update.<a href="#section-8.3.4-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.4-3">Note that under this compromise scenario, the attacker can perform all
+sends an honest update.<a href="#section-8.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-3">Note that under this compromise scenario, the attacker can perform all
 operations which are available to a legitimate client even without access to the
-actual value of the signature key.<a href="#section-8.3.4-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.4-4">Without access to the group secrets, the adversary will not have the ability to
+actual value of the signature key.<a href="#section-8.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-4">Without access to the group secrets, the adversary will not have the ability to
 generate messages which look valid to other members of the group and to the
 infrastructure as they need to have access to group secrets to compute the
-encryption keys or the membership tag.<a href="#section-8.3.4-4" class="pilcrow">¶</a></p>
+encryption keys or the membership tag.<a href="#section-8.3.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="compromise-of-the-authentication-with-access-to-a-signature-key">
-<section id="section-8.3.5">
+<section id="section-8.3.3">
           <h4 id="name-compromise-of-the-authentic">
-<a href="#section-8.3.5" class="section-number selfRef">8.3.5. </a><a href="#name-compromise-of-the-authentic" class="section-name selfRef">Compromise of the authentication with access to a signature key</a>
+<a href="#section-8.3.3" class="section-number selfRef">8.3.3. </a><a href="#name-compromise-of-the-authentic" class="section-name selfRef">Compromise of the authentication with access to a signature key</a>
           </h4>
-<p id="section-8.3.5-1">The difference between having access to the value of the signature key and only
+<p id="section-8.3.3-1">The difference between having access to the value of the signature key and only
 having access to a signing oracle is not about the ability of an active adaptive
 network attacker to perform different operations during the time of the
 compromise, the attacker can perform every operation available to a legitimate
-client in both cases.<a href="#section-8.3.5-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-2">There is a significant difference, however in terms of recovery after a
-compromise.<a href="#section-8.3.5-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-3">Because of the PCS guarantees provided by the MLS protocol, when a
+client in both cases.<a href="#section-8.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-2">There is a significant difference, however in terms of recovery after a
+compromise.<a href="#section-8.3.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-3">Because of the PCS guarantees provided by the MLS protocol, when a
 previously compromised client recovers from compromise and performs an
 honest Commit, both secrecy and authentication of future messages can
 be recovered as long as the attacker doesn't otherwise get access to
 the key. Because the adversary doesn't have the signing key, they
 cannot authenticate messages on behalf of the compromised party, even
 if they still have control over some group keys by colluding with
-other members of the group.<a href="#section-8.3.5-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-4">This is in contrast with the case where the signature key is leaked. In that
+other members of the group.<a href="#section-8.3.3-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-4">This is in contrast with the case where the signature key is leaked. In that
 case the compromised endpoint needs to refresh its credentials and invalidate
 the old credentials before the attacker will be unable to authenticate
-messages.<a href="#section-8.3.5-4" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-5">Beware that in both oracle and private key access, an active adaptive attacker
+messages.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-5">Beware that in both oracle and private key access, an active adaptive attacker
 can follow the protocol and request to update its own credential. This in turn
 induces a signature key rotation which could provide the attacker with part or
 the full value of the private key depending on the architecture of the service
-provider.<a href="#section-8.3.5-5" class="pilcrow">¶</a></p>
+provider.<a href="#section-8.3.3-5" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.5-6.1">
-              <p id="section-8.3.5-6.1.1"><strong>RECOMMENDATION:</strong> Signature private keys should be compartmentalized from
+<li class="normal ulEmpty" id="section-8.3.3-6.1">
+              <p id="section-8.3.3-6.1.1"><strong>RECOMMENDATION:</strong> Signature private keys should be compartmentalized from
 other secrets and preferably protected by an HSM or dedicated hardware
 features to allow recovery of the authentication for future messages after a
-compromise.<a href="#section-8.3.5-6.1.1" class="pilcrow">¶</a></p>
+compromise.<a href="#section-8.3.3-6.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.5-7.1">
-              <p id="section-8.3.5-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation,
-the users of a group should check for revoked keys.<a href="#section-8.3.5-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.3.3-7.1">
+              <p id="section-8.3.3-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation,
+the users of a group should check for revoked keys.<a href="#section-8.3.3-7.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
 </div>
 <div id="security-consideration-in-the-context-of-a-full-state-compromise">
-<section id="section-8.3.6">
+<section id="section-8.3.4">
           <h4 id="name-security-consideration-in-t">
-<a href="#section-8.3.6" class="section-number selfRef">8.3.6. </a><a href="#name-security-consideration-in-t" class="section-name selfRef">Security consideration in the context of a full state compromise</a>
+<a href="#section-8.3.4" class="section-number selfRef">8.3.4. </a><a href="#name-security-consideration-in-t" class="section-name selfRef">Security consideration in the context of a full state compromise</a>
           </h4>
-<p id="section-8.3.6-1">In real-world compromise scenarios, it is often the case that adversaries target
+<p id="section-8.3.4-1">In real-world compromise scenarios, it is often the case that adversaries target
 specific devices to obtain parts of the memory or even the ability to execute
-arbitrary code in the targeted device.<a href="#section-8.3.6-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-2">Also, recall that in this setting, the application will often retain the
+arbitrary code in the targeted device.<a href="#section-8.3.4-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.4-2">Also, recall that in this setting, the application will often retain the
 unencrypted messages. If so, the adversary does not have to break encryption at
 all to access sent and received messages. Messages may also be sent by using the
-application to instruct the protocol implementation.<a href="#section-8.3.6-2" class="pilcrow">¶</a></p>
+application to instruct the protocol implementation.<a href="#section-8.3.4-2" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.6-3.1">
-              <p id="section-8.3.6-3.1.1"><strong>RECOMMENDATION:</strong> If messages are stored on the device, they should be
+<li class="normal ulEmpty" id="section-8.3.4-3.1">
+              <p id="section-8.3.4-3.1.1"><strong>RECOMMENDATION:</strong> If messages are stored on the device, they should be
 protected using encryption at rest, and the keys used should be stored
-securely using dedicated mechanisms on the device.<a href="#section-8.3.6-3.1.1" class="pilcrow">¶</a></p>
+securely using dedicated mechanisms on the device.<a href="#section-8.3.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.6-4.1">
-              <p id="section-8.3.6-4.1.1"><strong>RECOMMENDATION:</strong> If the threat model of the system is against an adversary
+<li class="normal ulEmpty" id="section-8.3.4-4.1">
+              <p id="section-8.3.4-4.1.1"><strong>RECOMMENDATION:</strong> If the threat model of the system is against an adversary
 which can access the messages on the device without even needing to attack
 MLS, the application should delete plaintext and ciphertext messages
-as soon as practical after encryption or decryption.<a href="#section-8.3.6-4.1.1" class="pilcrow">¶</a></p>
+as soon as practical after encryption or decryption.<a href="#section-8.3.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-8.3.6-5">Note that this document makes a clear distinction between the way signature keys
+<p id="section-8.3.4-5">Note that this document makes a clear distinction between the way signature keys
 and other group shared secrets must be handled.  In particular, a large set of
 group secrets cannot necessarily be assumed to be protected by an HSM or secure
 enclave features. This is especially true because these keys are
-frequently used and changed with each message received by a client.<a href="#section-8.3.6-5" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-6">However, the signature private keys are mostly used by clients to send a
+frequently used and changed with each message received by a client.<a href="#section-8.3.4-5" class="pilcrow">¶</a></p>
+<p id="section-8.3.4-6">However, the signature private keys are mostly used by clients to send a
 message. They also provide strong authentication guarantees to other clients,
 hence we consider that their protection by additional security mechanisms should
-be a priority.<a href="#section-8.3.6-6" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-7">Overall there is no way to detect or prevent these compromises, as discussed in
+be a priority.<a href="#section-8.3.4-6" class="pilcrow">¶</a></p>
+<p id="section-8.3.4-7">Overall there is no way to detect or prevent these compromises, as discussed in
 the previous sections, performing separation of the application secret states
 can help recovery after compromise, this is the case for signature keys but
-similar concern exists for client's encryption private keys.<a href="#section-8.3.6-7" class="pilcrow">¶</a></p>
+similar concern exists for client's encryption private keys.<a href="#section-8.3.4-7" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.6-8.1">
-              <p id="section-8.3.6-8.1.1"><strong>RECOMMENDATION:</strong> The secret keys used for public key encryption should be
+<li class="normal ulEmpty" id="section-8.3.4-8.1">
+              <p id="section-8.3.4-8.1.1"><strong>RECOMMENDATION:</strong> The secret keys used for public key encryption should be
 stored similarly to the way the signature keys are stored, as keys can be used
 to decrypt the group operation messages and contain the secret material used
-to compute all the group secrets.<a href="#section-8.3.6-8.1.1" class="pilcrow">¶</a></p>
+to compute all the group secrets.<a href="#section-8.3.4-8.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-8.3.6-9">Even if secure enclaves are not perfectly secure, or even completely broken,
+<p id="section-8.3.4-9">Even if secure enclaves are not perfectly secure, or even completely broken,
 adopting additional protections for these keys can ease recovery of the secrecy
 and authentication guarantees after a compromise where, for instance, an
 attacker can sign messages without having access to the key. In certain
 contexts, the rotation of credentials might only be triggered by the AS through
-ACLs, hence be outside of the capabilities of the attacker.<a href="#section-8.3.6-9" class="pilcrow">¶</a></p>
+ACLs, hence be outside of the capabilities of the attacker.<a href="#section-8.3.4-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
