@@ -2728,79 +2728,75 @@ interoperability:<a href="#section-7-12" class="pilcrow">¶</a></p>
       <h2 id="name-security-and-privacy-consid">
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-security-and-privacy-consid" class="section-name selfRef">Security and Privacy Considerations</a>
       </h2>
-<p id="section-8-1">MLS adopts the Internet threat model <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span> and therefore assumes that the
-attacker has complete control of the network. It is intended to provide the
-security services described in the face of such attackers.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-1">MLS adopts the Internet threat model <span>[<a href="#RFC3552" class="cite xref">RFC3552</a>]</span> and therefore
+assumes that the attacker has complete control of the network. It is
+intended to provide the security services described in
+<a href="#intended-security-guarantees" class="auto internal xref">Section 8.2</a> in the face of attackers who can:<a href="#section-8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-8-2.1">
-          <p id="section-8-2.1.1">The attacker can monitor the entire network.<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
+          <p id="section-8-2.1.1">Monitor the entire network.<a href="#section-8-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-8-2.2">
-          <p id="section-8-2.2.1">The attacker can read unprotected messages.<a href="#section-8-2.2.1" class="pilcrow">¶</a></p>
+          <p id="section-8-2.2.1">Read unprotected messages.<a href="#section-8-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-8-2.3">
-          <p id="section-8-2.3.1">The attacker can generate, inject and delete any message in the unprotected
+          <p id="section-8-2.3.1">Can generate, inject and delete any message in the unprotected
 transport layer.<a href="#section-8-2.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-8-3">In addition, these guarantees are intended to degrade gracefully in the presence
+<p id="section-8-3">While MLS should be run over a secure transport such as QUIC
+<span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span> or TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, the security guarantees of MLS do
+not depend on the transport. This departs from the usual design
+practice of trusting the transport because MLS is designed to
+provide security even in the face of compromised network
+elements, especially the DS.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">Generally, MLS is designed under the
+assumption that the transport layer is present to keep metadata
+private from network observers, while the MLS protocol provides
+confidentiality, integrity, and authentication guarantees for the
+application data (which could pass through multiple
+systems). Additional properties such as partial anonymity or
+deniability could also be achieved in specific architecture designs.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">In addition, these guarantees are intended to degrade gracefully in the presence
 of compromise of the transport security links as well as of both clients and
-elements of the messaging system, as described in the remainder of this section.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<p id="section-8-4">Generally, MLS is designed under the assumption that the transport layer is
-present to keep metadata private from network observers, while the MLS protocol provides confidentiality,
-integrity, and authentication guarantees for the application data (which could pass
-through multiple systems). Additional properties such as partial anonymity or deniability could also be
-achieved in specific architecture designs.<a href="#section-8-4" class="pilcrow">¶</a></p>
+elements of the messaging system, as described in the remainder of this section.<a href="#section-8-5" class="pilcrow">¶</a></p>
 <div id="assumptions-on-transport-security-links">
 <section id="section-8.1">
         <h3 id="name-assumptions-on-transport-se">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-assumptions-on-transport-se" class="section-name selfRef">Assumptions on Transport Security Links</a>
         </h3>
 <p id="section-8.1-1">As discussed above, MLS provides the highest level of security when its messages
-are delivered over an encrypted transport.  Any secure channel,
-such as QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>, TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, can be used to
-transport MLS messages.
-However, the MLS protocol is designed to consider the following
-threat-model:<a href="#section-8.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-8.1-2.1">
-            <p id="section-8.1-2.1.1">The attacker can read, write, and delete arbitrary messages inside the secure
-transport channel.<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-8.1-3">This departs from most threat models where we consider that the secure channel
-used for transport always provides secrecy. The reason for this consideration is
-that in the group setting, active malicious insiders or adversarial services are
-to be considered.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
-<p id="section-8.1-4">The main use of the secure transport layer for MLS is to protect the already
+are delivered over an encrypted transport.
+The main use of the secure transport layer for MLS is to protect the already
 limited amount of metadata. Very little information is contained in the
 unencrypted header of the MLS protocol message format for group operation
-messages, and application messages are always encrypted in MLS.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
+messages, and application messages are always encrypted in MLS.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.1-5.1">
-            <p id="section-8.1-5.1.1"><strong>RECOMMENDATION:</strong> Use transports that provide reliability and metadata
+<li class="normal ulEmpty" id="section-8.1-2.1">
+            <p id="section-8.1-2.1.1"><strong>RECOMMENDATION:</strong> Use transports that provide reliability and metadata
 confidentiality whenever possible, e.g., by transmitting MLS messages over
-a protocol such as TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> or QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-8.1-5.1.1" class="pilcrow">¶</a></p>
+a protocol such as TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span> or QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>.<a href="#section-8.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-8.1-6">MLS avoids needing to send the full list of recipients to the server for
+<p id="section-8.1-3">MLS avoids needing to send the full list of recipients to the server for
 dispatching messages because that list could potentially contain tens of thousands of
 recipients. Header metadata in MLS messages typically consists of an opaque
 <code>group_id</code>, a numerical value to determine the epoch of the group (the number
 of changes that have been made to the group), and whether the message is an
-application message, a proposal, or a commit.<a href="#section-8.1-6" class="pilcrow">¶</a></p>
-<p id="section-8.1-7">Even though some of this metadata information does not consist of sensitive
+application message, a proposal, or a commit.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-4">Even though some of this metadata information does not consist of sensitive
 information, in correlation with other data a network observer might be able to
 reconstruct sensitive information. Using a secure channel to transfer this
 information will prevent a network attacker from accessing this MLS protocol
-metadata if it cannot compromise the secure channel.<a href="#section-8.1-7" class="pilcrow">¶</a></p>
+metadata if it cannot compromise the secure channel.<a href="#section-8.1-4" class="pilcrow">¶</a></p>
 <div id="integrity-and-authentication-of-custom-metadata">
 <section id="section-8.1.1">
           <h4 id="name-integrity-and-authenticatio">
 <a href="#section-8.1.1" class="section-number selfRef">8.1.1. </a><a href="#name-integrity-and-authenticatio" class="section-name selfRef">Integrity and Authentication of Custom Metadata</a>
           </h4>
-<p id="section-8.1.1-1">The MLS protocol provides an authenticated "Additional Authenticated Data" field
-for applications to make data available outside a PrivateMessage.<a href="#section-8.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1.1-1">MLS provides an authenticated "Additional Authenticated Data" (AAD) field
+for applications to make data available outside a PrivateMessage, while
+cryptographically binding it to the message.<a href="#section-8.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.1.1-2.1">
               <p id="section-8.1.1-2.1.1"><strong>RECOMMENDATION:</strong> Use the "Additional Authenticated Data" field of the
@@ -3055,11 +3051,13 @@ compromise)<a href="#section-8.3-3.6.1" class="pilcrow">¶</a></p>
         </ul>
 <p id="section-8.3-4">The MLS protocol provides per-sender chains of symmetric authenticated
 encryption with additional data (AEAD) <span>[<a href="#RFC5116" class="cite xref">RFC5116</a>]</span> keys that are
-generated from Group Secrets. These keys are used to protect MLS
-Plaintext messages which can be Group Operation or Application
-messages. The Group Operation messages offer an additional protection
-as the secret exchanged within the TreeKEM group key agreement are
-public-key encrypted to subgroups with HPKE.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
+generated from Group Secrets. Specifically, each epoch establishes
+a per-sender "Ratchet Secret", which is then used to generate an
+AEAD key, which is used to protect MLS Plaintext messages.
+A new Ratchet Secret is generated and is used to generate the AEAD keys for each
+message. Because of the properties of the key derivation function, it is
+not possible to compute a Ratchet Secret from its corresponding
+AEAD key or compute Ratchet Secret n-1 from Ratchet Secret n.<a href="#section-8.3-4" class="pilcrow">¶</a></p>
 <div id="compromise-of-application-ratchet-key-material">
 <section id="section-8.3.1">
           <h4 id="name-compromise-of-application-r">
@@ -3126,18 +3124,20 @@ section, we consider the case where the signature keys are not
 compromised, which can occur if the attacker has access to part of the
 memory containing the group secrets but not to the signature keys
 which might be stored in a secure enclave.<a href="#section-8.3.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-2">In this scenario, the adversary gains the ability to compute any number of AEAD
-encryption keys for any AEAD chains and can encrypt and decrypt all messages for
-the compromised epochs.<a href="#section-8.3.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.3-2">In this scenario, the adversary gains the ability to compute any
+number of Ratchet Secrets for the epoch and their corresponding AEAD
+encryption keys and thus can encrypt and decrypt all messages for the
+compromised epochs.<a href="#section-8.3.3-2" class="pilcrow">¶</a></p>
 <p id="section-8.3.3-3">If the adversary is passive, it is expected from the PCS properties of the MLS
 protocol that, as soon as the compromised party remediates the compromise and
 sends an honest Commit message, the next epochs will provide message secrecy.<a href="#section-8.3.3-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.3-4">If the adversary is active, the adversary can follow the protocol and perform
-updates on behalf of the compromised party with no ability for an honest group
-to recover message secrecy. However, MLS provides PCS against active adaptive
-attackers through its Remove group operation. This means that, as long as other
-members of the group are honest, the protocol will guarantee message secrecy for
-all messages exchanged in the epochs after the compromised party has been
+<p id="section-8.3.3-4">If the adversary is active, the adversary can engage in the protocol
+itself and perform updates on behalf of the compromised party with no
+ability for an honest group to recover message secrecy. However, MLS
+provides PCS against active adaptive attackers through its Remove
+group operation. This means that, as long as other members of the
+group are honest, the protocol will guarantee message secrecy for all
+messages exchanged in the epochs after the compromised party has been
 removed.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3146,8 +3146,8 @@ removed.<a href="#section-8.3.3-4" class="pilcrow">¶</a></p>
           <h4 id="name-compromise-by-an-active-adv">
 <a href="#section-8.3.4" class="section-number selfRef">8.3.4. </a><a href="#name-compromise-by-an-active-adv" class="section-name selfRef">Compromise by an active adversary with the ability to sign messages</a>
           </h4>
-<p id="section-8.3.4-1">Under such a scenario, where an active adversary has compromised an MLS client,
-two different settings emerge. In the strongest compromise scenario, the
+<p id="section-8.3.4-1">If an active adversary has compromised an MLS client and can sign
+messages, two different settings emerge. In the strongest compromise scenario, the
 attacker has access to the signing key and can forge authenticated messages. In
 a weaker, yet realistic scenario, the attacker has compromised a client but the
 client signature keys are protected with dedicated hardware features which do
@@ -3181,17 +3181,18 @@ compromise, the attacker can perform every operation available to a legitimate
 client in both cases.<a href="#section-8.3.5-1" class="pilcrow">¶</a></p>
 <p id="section-8.3.5-2">There is a significant difference, however in terms of recovery after a
 compromise.<a href="#section-8.3.5-2" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-3">Because of the PCS guarantees provided by the MLS protocol, when a previously
-compromised client performs an honest Commit which is not under the control of
-the adversary, both secrecy and authentication of messages can be recovered in
-the case where the attacker didn't get access to the key. Because the adversary
-doesn't have the key and has lost the ability to sign messages, they cannot
-authenticate messages on behalf of the compromised party, even if they still
-have control over some group keys by colluding with other members of the group.<a href="#section-8.3.5-3" class="pilcrow">¶</a></p>
-<p id="section-8.3.5-4">This is in contrast with the case where the signature key is leaked.  In that
-case PCS of the MLS protocol will eventually allow recovery of the
-authentication of messages for future epochs but only after compromised parties
-refresh their credentials securely.<a href="#section-8.3.5-4" class="pilcrow">¶</a></p>
+<p id="section-8.3.5-3">Because of the PCS guarantees provided by the MLS protocol, when a
+previously compromised client recovers from compromise and performs an
+honest Commit, both secrecy and authentication of future messages can
+be recovered as long as the attacker doesn't otherwise get access to
+the key. Because the adversary doesn't have the signing key, they
+cannot authenticate messages on behalf of the compromised party, even
+if they still have control over some group keys by colluding with
+other members of the group.<a href="#section-8.3.5-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.5-4">This is in contrast with the case where the signature key is leaked. In that
+case the compromised endpoint needs to refresh its credentials and invalidate
+the old credentials before the attacker will be unable to authenticate
+messages.<a href="#section-8.3.5-4" class="pilcrow">¶</a></p>
 <p id="section-8.3.5-5">Beware that in both oracle and private key access, an active adaptive attacker
 can follow the protocol and request to update its own credential. This in turn
 induces a signature key rotation which could provide the attacker with part or
@@ -3203,6 +3204,12 @@ provider.<a href="#section-8.3.5-5" class="pilcrow">¶</a></p>
 other secrets and preferably protected by an HSM or dedicated hardware
 features to allow recovery of the authentication for future messages after a
 compromise.<a href="#section-8.3.5-6.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.3.5-7.1">
+              <p id="section-8.3.5-7.1.1"><strong>RECOMMENDATION:</strong> When the credential type supports revocation,
+the users of a group should check for revoked keys.<a href="#section-8.3.5-7.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3230,40 +3237,37 @@ securely using dedicated mechanisms on the device.<a href="#section-8.3.6-3.1.1"
 <li class="normal ulEmpty" id="section-8.3.6-4.1">
               <p id="section-8.3.6-4.1.1"><strong>RECOMMENDATION:</strong> If the threat model of the system is against an adversary
 which can access the messages on the device without even needing to attack
-MLS, the application should delete plaintext messages and ciphertexts
+MLS, the application should delete plaintext and ciphertext messages
 as soon as practical after encryption or decryption.<a href="#section-8.3.6-4.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-8.3.6-5">Even though, from the strict point of view of the security formalization, a
-ciphertext is always public and will forever be, there is no loss in trying to
-erase ciphertexts as much as possible.<a href="#section-8.3.6-5" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-6">Note that this document makes a clear distinction between the way signature keys
+<p id="section-8.3.6-5">Note that this document makes a clear distinction between the way signature keys
 and other group shared secrets must be handled.  In particular, a large set of
 group secrets cannot necessarily be assumed to be protected by an HSM or secure
 enclave features. This is especially true because these keys are
-frequently used and changed with each message received by a client.<a href="#section-8.3.6-6" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-7">However, the signature private keys are mostly used by clients to send a
+frequently used and changed with each message received by a client.<a href="#section-8.3.6-5" class="pilcrow">¶</a></p>
+<p id="section-8.3.6-6">However, the signature private keys are mostly used by clients to send a
 message. They also provide strong authentication guarantees to other clients,
 hence we consider that their protection by additional security mechanisms should
-be a priority.<a href="#section-8.3.6-7" class="pilcrow">¶</a></p>
-<p id="section-8.3.6-8">Overall there is no way to detect or prevent these compromises, as discussed in
+be a priority.<a href="#section-8.3.6-6" class="pilcrow">¶</a></p>
+<p id="section-8.3.6-7">Overall there is no way to detect or prevent these compromises, as discussed in
 the previous sections, performing separation of the application secret states
 can help recovery after compromise, this is the case for signature keys but
-similar concern exists for client's encryption private keys.<a href="#section-8.3.6-8" class="pilcrow">¶</a></p>
+similar concern exists for client's encryption private keys.<a href="#section-8.3.6-7" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.3.6-9.1">
-              <p id="section-8.3.6-9.1.1"><strong>RECOMMENDATION:</strong> The secret keys used for public key encryption should be
+<li class="normal ulEmpty" id="section-8.3.6-8.1">
+              <p id="section-8.3.6-8.1.1"><strong>RECOMMENDATION:</strong> The secret keys used for public key encryption should be
 stored similarly to the way the signature keys are stored, as keys can be used
 to decrypt the group operation messages and contain the secret material used
-to compute all the group secrets.<a href="#section-8.3.6-9.1.1" class="pilcrow">¶</a></p>
+to compute all the group secrets.<a href="#section-8.3.6-8.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-8.3.6-10">Even if secure enclaves are not perfectly secure, or even completely broken,
+<p id="section-8.3.6-9">Even if secure enclaves are not perfectly secure, or even completely broken,
 adopting additional protections for these keys can ease recovery of the secrecy
 and authentication guarantees after a compromise where, for instance, an
 attacker can sign messages without having access to the key. In certain
 contexts, the rotation of credentials might only be triggered by the AS through
-ACLs, hence be outside of the capabilities of the attacker.<a href="#section-8.3.6-10" class="pilcrow">¶</a></p>
+ACLs, hence be outside of the capabilities of the attacker.<a href="#section-8.3.6-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3310,8 +3314,10 @@ the IP address and depending on the protocol the MAC address of the device.<a hr
 <p id="section-8.4.1.1-4">Similar concerns exist in the peer-to-peer use cases of MLS.<a href="#section-8.4.1.1-4" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-8.4.1.1-5.1">
-                <p id="section-8.4.1.1-5.1.1"><strong>RECOMMENDATION:</strong> In the case where privacy or anonymity is important, using
-adequate protection such as TOR or a VPN can improve metadata protection.<a href="#section-8.4.1.1-5.1.1" class="pilcrow">¶</a></p>
+                <p id="section-8.4.1.1-5.1.1"><strong>RECOMMENDATION:</strong> In the case where privacy or anonymity is
+important, using adequate protection such as MASQUE
+<span>[<a href="#I-D.schinazi-masque-proxy" class="cite xref">I-D.schinazi-masque-proxy</a>]</span>, ToR, or a VPN can improve metadata
+protection.<a href="#section-8.4.1.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-8.4.1.1-6">More generally, using anonymous credentials in an MLS based architecture might
@@ -3444,75 +3450,71 @@ impersonate the client.<a href="#section-8.4.3-5" class="pilcrow">¶</a></p>
             <h5 id="name-authentication-compromise-g">
 <a href="#section-8.4.3.1" class="section-number selfRef">8.4.3.1. </a><a href="#name-authentication-compromise-g" class="section-name selfRef">Authentication compromise: Ghost users and impersonations</a>
             </h5>
-<p id="section-8.4.3.1-1">One important feature of MLS is that all Members know which other members are in
+<p id="section-8.4.3.1-1">One important property of MLS is that all Members know which other members are in
 the group at all times. If all Members of the group and the Authentication
 Service are honest, no parties other than the members of the current group can
 read and write messages protected by the protocol for that Group.<a href="#section-8.4.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-2">Details about how to verify the identity of a client depend on the MLS
+<p id="section-8.4.3.1-2">This guarantee applies to the the cryptographic identities of the members.
+Details about how to verify the identity of a client depend on the MLS
 Credential type used. For example, cryptographic verification of credentials can
-be largely performed autonomously (e.g. without user interaction) by
+be largely performed autonomously (e.g., without user interaction) by
 the clients themselves for the <code>x509</code> Credential
-type. In contrast, when MLS clients use the <code>basic</code> Credential type, a larger
-degree of trust must be placed in a (likely) centralized authentication
-resource, or on out-of-band processes such as manual verification.<a href="#section-8.4.3.1-2" class="pilcrow">¶</a></p>
+type.<a href="#section-8.4.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-3">In contrast, when MLS clients use the <code>basic</code> Credential type, then some
+other mechanism must be used to verify identities. For instance the Authentication
+Service could operate some sort of directory server to provide keys,
+or users could verify keys via an out-of-band mechanism.<a href="#section-8.4.3.1-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-3.1">
-                <p id="section-8.4.3.1-3.1.1"><strong>RECOMMENDATION:</strong> Select the strongest MLS Credential type available among
-the target members of an MLS group.<a href="#section-8.4.3.1-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.4.3.1-4.1">
+                <p id="section-8.4.3.1-4.1.1"><strong>RECOMMENDATION:</strong> Select the strongest MLS Credential type available among
+the target members of an MLS group.<a href="#section-8.4.3.1-4.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-4">If the AS is compromised, it could validate a (or generate a new) signature
-keypair for an attacker. Because a user can have many MLS clients running the
-MLS protocol, it possibly has many signature keypairs for multiple
-devices. These attacks could be very difficult to detect.<a href="#section-8.4.3.1-4" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-5">If the AS is compromised, it could validate a (or generate a new)
+signature keypair for an attacker. The attacker could then use this
+keypair to join a group as if it were another of the user's clients.
+Because a user can have many MLS
+clients running the MLS protocol, it possibly has many signature
+keypairs for multiple devices. These attacks could be very difficult
+to detect, especially in large groups where the UI might not reflect
+all the changes back to the users. If the application participates in
+a key transparency mechanism in which it is possible to determine
+every key for a given user, then this then this would allow for the
+detection of surreptitiously created false credentials.<a href="#section-8.4.3.1-5" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-5.1">
-                <p id="section-8.4.3.1-5.1.1"><strong>RECOMMENDATION:</strong> Provide a key transparency mechanism for the
-Authentication Services to allow public verification of the credentials
-authenticated by this service.<a href="#section-8.4.3.1-5.1.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-8.4.3.1-6">Note that when a <code>basic</code> Credential is used, the Authentication Service also
-needs an out-of-band mechanism to verify the identity asserted in the
-Credential.<a href="#section-8.4.3.1-6" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-7">In the case where an adversarial keypair is generated for a specific identity,
-an infrastructure without any transparency mechanism or out-of-band
-authentication mechanism could inject a malicious client into a group by
-impersonating a user. This is especially the case in large groups where the UI
-might not reflect all the changes back to the users.<a href="#section-8.4.3.1-7" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-8.1">
-                <p id="section-8.4.3.1-8.1.1"><strong>RECOMMENDATION:</strong> Make sure that MLS clients reflect all the membership
+<li class="normal ulEmpty" id="section-8.4.3.1-6.1">
+                <p id="section-8.4.3.1-6.1.1"><strong>RECOMMENDATION:</strong> Make sure that MLS clients reflect all the membership
 changes to the users as they happen. If a choice has to be made because the
-number of notifications is too high, a public log should be maintained of the
-state of the device so that the user can examine it.<a href="#section-8.4.3.1-8.1.1" class="pilcrow">¶</a></p>
+number of notifications is too high, the client should provide a log of
+state of the device so that the user can examine it.<a href="#section-8.4.3.1-6.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-9">While the ways to handle MLS credentials are not defined by the protocol or the
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8.4.3.1-7.1">
+                <p id="section-8.4.3.1-7.1.1"><strong>RECOMMENDATION:</strong> Provide a key transparency mechanism for the
+Authentication Services to allow public verification of the credentials
+authenticated by this service.<a href="#section-8.4.3.1-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            </ul>
+<p id="section-8.4.3.1-8">While the ways to handle MLS credentials are not defined by the protocol or the
 architecture documents, the MLS protocol has been designed with a mechanism that
 can be used to provide out-of-band authentication to users. The
 "authentication_secret" generated for each user at each epoch of the group is a
 one-time, per client, authentication secret which can be exchanged between users
 to prove their identity to each other. This can be done for instance using a QR
-code that can be scanned by the other parties.<a href="#section-8.4.3.1-9" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-10">Another way to improve the security for the users is to provide a transparency
-mechanism which allows each user to check if credentials used in groups have
-been published in the transparency log. Another benefit of this mechanism is for
-revocation. The users of a group could check for revoked keys (in case of
-compromise detection) using a mechanism such as CRLite or some more advanced
-privacy preserving technology.<a href="#section-8.4.3.1-10" class="pilcrow">¶</a></p>
+code that can be scanned by the other parties.<a href="#section-8.4.3.1-8" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8.4.3.1-11.1">
-                <p id="section-8.4.3.1-11.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication
-mechanisms to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-11.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.4.3.1-9.1">
+                <p id="section-8.4.3.1-9.1.1"><strong>RECOMMENDATION:</strong> Provide one or more out-of-band authentication
+mechanisms to limit the impact of an Authentication Service compromise.<a href="#section-8.4.3.1-9.1.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-8.4.3.1-12">We note, again, that as described prior to that section, the Authentication
+<p id="section-8.4.3.1-10">We note, again, that as described prior to that section, the Authentication
 Service may not be a centralized system, and could be realized by many
 mechanisms such as establishing prior one-to-one deniable channels, gossiping,
-or using trust on first use (TOFU) for credentials used by the MLS Protocol.<a href="#section-8.4.3.1-12" class="pilcrow">¶</a></p>
-<p id="section-8.4.3.1-13">Another important consideration is the ease of redistributing new keys on client
-compromise, which helps recovering security faster in various cases.<a href="#section-8.4.3.1-13" class="pilcrow">¶</a></p>
+or using trust on first use (TOFU) for credentials used by the MLS Protocol.<a href="#section-8.4.3.1-10" class="pilcrow">¶</a></p>
+<p id="section-8.4.3.1-11">Another important consideration is the ease of redistributing new keys on client
+compromise, which helps recovering security faster in various cases.<a href="#section-8.4.3.1-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="privacy-of-the-group-membership">
@@ -3710,6 +3712,10 @@ guarantees provided by MLS.<a href="#section-8.6-2" class="pilcrow">¶</a></p>
 <dt id="I-D.ietf-mls-federation">[I-D.ietf-mls-federation]</dt>
         <dd>
 <span class="refAuthor">Omara, E.</span> and <span class="refAuthor">R. Robert</span>, <span class="refTitle">"The Messaging Layer Security (MLS) Federation"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-mls-federation-03</span>, <time datetime="2023-09-09" class="refDate">9 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-mls-federation-03">https://datatracker.ietf.org/doc/html/draft-ietf-mls-federation-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.schinazi-masque-proxy">[I-D.schinazi-masque-proxy]</dt>
+        <dd>
+<span class="refAuthor">Schinazi, D.</span>, <span class="refTitle">"The MASQUE Proxy"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-schinazi-masque-proxy-01</span>, <time datetime="2023-09-07" class="refDate">7 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy-01">https://datatracker.ietf.org/doc/html/draft-schinazi-masque-proxy-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="Loopix">[Loopix]</dt>
         <dd>
