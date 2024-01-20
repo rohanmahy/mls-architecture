@@ -5,14 +5,14 @@
 Network Working Group                                      B. Beurdouche
 Internet-Draft                                           Inria & Mozilla
 Intended status: Informational                               E. Rescorla
-Expires: 22 July 2024                                            Mozilla
+Expires: 23 July 2024                                            Mozilla
                                                                 E. Omara
                                                                   Google
                                                                S. Inguva
                                                                         
                                                                 A. Duric
                                                                     Wire
-                                                         19 January 2024
+                                                         20 January 2024
 
 
             The Messaging Layer Security (MLS) Architecture
@@ -68,7 +68,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 July 2024.
+   This Internet-Draft will expire on 23 July 2024.
 
 Copyright Notice
 
@@ -494,12 +494,13 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
       function is the application function that enables users to verify
       keys.
 
-   *  In a system based on [CONIKS] end user Key Transparency (KT), the
-      issuance function would correspond to the insertion of a key in a
-      KT log under a user's identity.  The verification function would
-      correspond to verifying a key's inclusion in the log for a claimed
-      identity, together with the KT log's mechanisms for a user to
-      monitor and control which keys are associated with their identity.
+   *  In a system based on [CONIKS] end user Key Transparency (KT) [KT],
+      the issuance function would correspond to the insertion of a key
+      in a KT log under a user's identity.  The verification function
+      would correspond to verifying a key's inclusion in the log for a
+      claimed identity, together with the KT log's mechanisms for a user
+      to monitor and control which keys are associated with their
+      identity.
 
    By the nature of its roles in MLS authentication, the AS is invested
    with a large amount of trust and the compromise of one the AS could
@@ -1403,7 +1404,8 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
    properties after the updates have been processed.
 
    Both of these properties are satisfied even against compromised DSs
-   and ASs in the case where a Key Transparency mechanism is in use.
+   and ASs in the case where some other mechanism for verifying keys is
+   in use, such as Key Transparency [KT].
 
    Confidentiality is mainly ensured on the client side.  Because
    Forward Secrecy (FS) and Post-Compromise Security (PCS) rely on the
@@ -2148,6 +2150,12 @@ Welcome (Charlie) ----------------------------------------->     | Step 4
               Internet-Draft, draft-schinazi-masque-proxy-01, 7
               September 2023, <https://datatracker.ietf.org/doc/html/
               draft-schinazi-masque-proxy-01>.
+
+   [KT]       McMillion, B., "Key Transparency Architecture", Work in
+              Progress, Internet-Draft, draft-ietf-keytrans-
+              architecture-00, 18 January 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-
+              keytrans-architecture-00>.
 
    [Loopix]   Piotrowska, A. M., Hayes, J., Elahi, T., Meiser, S., and
               G. Danezis, "The Loopix Anonymity System", 2017.
